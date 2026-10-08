@@ -2,6 +2,7 @@ using System;
 
 namespace MusicService.Domain;
 
+// dataclass for storing tracks information 
 public class Track
 {
     public string Link { get; }
