@@ -5,9 +5,13 @@ public class HitmoMusicSource: MusicSource
     public HitmoMusicSource()
     {
         SourceLink = "https://ru.hitmoz.org/search?q=";
-        Tags = new()
+        ParseTags = new()
         {
-            
+            {TrackSourceType.General, "track__list"},
+            {TrackSourceType.Name, "track__title"},
+            {TrackSourceType.Author, "track__desc"},
+            {TrackSourceType.Duration, "track__fulltime"},
+            {TrackSourceType.Link, "track__download-btn"},
         };
     } 
 
