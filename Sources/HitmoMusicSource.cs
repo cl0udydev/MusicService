@@ -5,6 +5,10 @@ public class HitmoMusicSource: MusicSource
     public HitmoMusicSource()
     {
         SourceLink = "https://ru.hitmoz.org/search?q=";
+        Tags = new()
+        {
+            
+        };
     } 
 
     public override string FormingLink(string userInput)
