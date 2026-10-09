@@ -10,5 +10,5 @@ public abstract class MusicSource
         SourceLink = "";
     }
 
-    public abstract string FormingLink(string userInput);
+    public abstract string FormingLink(string userInput); 
 }
