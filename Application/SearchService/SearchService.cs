@@ -2,28 +2,32 @@ using MusicService.Sources;
 using HtmlAgilityPack;
 using System.Threading.Tasks;
 
-namespace MusicService.App.SearchService;
+namespace MusicService.Applic.SearchService;
 
 // global class for search tracks on resources
 public class SearchService
 {
     private MusicSource _musicSource;
+    private Parser _parser;
 
-    public SearchService(MusicSource source)
+    public SearchService(MusicSource source, Parser parser)
     {
         _musicSource = source;
+        _parser = parser;
     }
 
-    public SearchResult SearchTracks(string userInput) // function-stub
+    public void ChangeSource(MusicSource souce)
     {
-        return new SearchResult(SearchResultType.Successfully); 
+        _musicSource = souce;
     }
-    
-    private async Task<HtmlDocument> TakeRequest(string userInput)
+
+    public async Task<SearchResult> SearchTracks(string userInput)
     {
         var web = new HtmlWeb();
         var link = _musicSource.FormingLink(userInput);
         var doc = await web.LoadFromWebAsync(link);
-        return doc;
+
+        return _parser.ParseSource(doc, _musicSource.ParseTags);
     }
+
 }
