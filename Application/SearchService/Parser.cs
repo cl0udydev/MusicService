@@ -9,11 +9,14 @@ namespace MusicService.Applic.SearchService;
 // parser html document to SearchResult => SearchService => ViewModel
 public class Parser
 {
-    public SearchResult ParseSource(HtmlDocument document, Dictionary<TrackSourceType, string> parseRules)
+    public SearchResult ParseSource(HtmlDocument document, Dictionary<TrackSourceType, TrackSourceParseRule> parseRules)
     {
+        // take html class and tag from parseRules and inserts them to SelectNodes args
+        var htmlTag = parseRules[TrackSourceType.General].HtmlTag;
+        var htmlClass = parseRules[TrackSourceType.General].HtmlClass;
 
         HtmlNodeCollection? trackNodes = document.DocumentNode.SelectNodes(
-            $"//li[contains(@class, '{parseRules[TrackSourceType.General]}')]"
+            $"//{htmlTag}[contains(@class, '{htmlClass}')]"
         );
 
         if (trackNodes == null) return new SearchResult(SearchResultType.Failed);
@@ -22,10 +25,21 @@ public class Parser
 
         foreach (HtmlNode trackNode in trackNodes)
         {
-            HtmlNode trackName = trackNode.SelectSingleNode($".//div[contains(@class, '{parseRules[TrackSourceType.Name]}')]")!;
-            HtmlNode trackAuthor = trackNode.SelectSingleNode($".//div[contains(@class, '{parseRules[TrackSourceType.Author]}')]")!;
-            HtmlNode trackDuration = trackNode.SelectSingleNode($".//div[contains(@class, '{parseRules[TrackSourceType.Duration]}')]")!;
-            HtmlNode UrlNode = trackNode.SelectSingleNode($".//div[contains(@class, '{parseRules[TrackSourceType.Link]}')]")!;
+            HtmlNode trackName = trackNode.SelectSingleNode(
+                $".//{parseRules[TrackSourceType.Name].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Name].HtmlClass}')]"
+            )!;
+
+            HtmlNode trackAuthor = trackNode.SelectSingleNode(
+                $".//{parseRules[TrackSourceType.Author].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Author].HtmlClass}')]"
+            )!;
+
+            HtmlNode trackDuration = trackNode.SelectSingleNode(
+                $".//{parseRules[TrackSourceType.Duration].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Duration].HtmlClass}')]"
+            )!;
+
+            HtmlNode UrlNode = trackNode.SelectSingleNode(
+                $".//{parseRules[TrackSourceType.Link].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Link].HtmlClass}')]"
+            )!;
 
             string trackUrl = UrlNode.GetAttributeValue("href", "not found");
             string name = trackName.InnerText.Trim();
