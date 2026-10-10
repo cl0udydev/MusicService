@@ -25,33 +25,41 @@ public class Parser
 
         foreach (HtmlNode trackNode in trackNodes)
         {
-            HtmlNode trackName = trackNode.SelectSingleNode(
+            HtmlNode? trackName = trackNode.SelectSingleNode(
                 $".//{parseRules[TrackSourceType.Name].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Name].HtmlClass}')]"
-            )!;
+            );
 
-            HtmlNode trackAuthor = trackNode.SelectSingleNode(
+            HtmlNode? trackAuthor = trackNode.SelectSingleNode(
                 $".//{parseRules[TrackSourceType.Author].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Author].HtmlClass}')]"
-            )!;
+            );
 
-            HtmlNode trackDuration = trackNode.SelectSingleNode(
+            HtmlNode? trackDuration = trackNode.SelectSingleNode(
                 $".//{parseRules[TrackSourceType.Duration].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Duration].HtmlClass}')]"
-            )!;
+            );
 
-            HtmlNode UrlNode = trackNode.SelectSingleNode(
+            HtmlNode? UrlNode = trackNode.SelectSingleNode(
                 $".//{parseRules[TrackSourceType.Link].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Link].HtmlClass}')]"
-            )!;
+            );
+            
+            if (trackName == null || trackAuthor == null || trackDuration == null || UrlNode == null)
+            {
+                continue; 
+            }
 
             string trackUrl = UrlNode.GetAttributeValue("href", "not found");
             string name = trackName.InnerText.Trim();
             string author = trackAuthor.InnerText.Trim();
-            string durationStr = trackDuration.InnerText.Trim();
 
-            TimeSpan duration;
+            TimeSpan duration = TimeSpan.Zero;
 
-            if (!TimeSpan.TryParse(durationStr, out duration))
+            if (trackDuration != null)
             {
-                if (TimeSpan.TryParseExact(durationStr, @"mm\:ss", null, out duration)) {}
-                else if (TimeSpan.TryParseExact(durationStr, @"m\:ss", null, out duration)) {}
+                string durationStr = trackDuration.InnerText.Trim(); 
+
+                if (TimeSpan.TryParseExact(durationStr, @"mm\:ss", null, out duration)) { }
+                else if (TimeSpan.TryParseExact(durationStr, @"m\:ss", null, out duration)) { }
+                else if (TimeSpan.TryParseExact(durationStr, @"h\:mm\:ss", null, out duration)) { }
+                else if (TimeSpan.TryParse(durationStr, out duration)) { }
             }
 
             Track track = new Track(trackUrl, name, author, duration);
