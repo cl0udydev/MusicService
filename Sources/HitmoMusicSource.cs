@@ -7,7 +7,7 @@ public class HitmoMusicSource: MusicSource
         SourceLink = "https://ru.hitmoz.org/search?q=";
         ParseTags = new()
         {
-            {TrackSourceType.General, new TrackSourceParseRule("tracks__list", "ul")},
+            {TrackSourceType.General, new TrackSourceParseRule("tracks__item", "li")},
             {TrackSourceType.Name, new TrackSourceParseRule("track__title", "div")},
             {TrackSourceType.Author, new TrackSourceParseRule("track__desc", "div")},
             {TrackSourceType.Duration, new TrackSourceParseRule("track__fulltime", "div")},
