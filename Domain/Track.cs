@@ -7,14 +7,19 @@ public class Track
 {
     public string Link { get; }
     public string Name { get; }
-    public string Artist { get; }
+    public string Author { get; }
     public TimeSpan Duration { get; }
 
-    public Track(string link, string name, string artist, TimeSpan duration)
+    public Track(string link, string name, string author, TimeSpan duration)
     {
         Link = link;
         Name = name;
-        Artist = artist;
+        Author = author;
         Duration = duration;
     }
+    public override string ToString()
+    {
+        return $"[🎵] {Author} — {Name} ({Duration:mm\\:ss})";
+    }
+
 }
