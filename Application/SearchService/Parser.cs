@@ -9,7 +9,7 @@ namespace MusicService.Applic.SearchService;
 // parser html document to SearchResult => SearchService => ViewModel
 public class Parser
 {
-    public SearchResult ParseSource(HtmlDocument document, Dictionary<TrackSourceType, TrackSourceParseRule> parseRules)
+    public SearchResult ParseSource(HtmlDocument document, Dictionary<TrackSourceType, TrackSourceParseRule> parseRules, string UrlPrefix)
     {
         // take html class and tag from parseRules and inserts them to SelectNodes args
         var htmlTag = parseRules[TrackSourceType.General].HtmlTag;
@@ -46,7 +46,7 @@ public class Parser
                 continue; 
             }
 
-            string trackUrl = UrlNode.GetAttributeValue("href", "not found");
+            string trackUrl = $"{UrlPrefix}{UrlNode.GetAttributeValue("href", "not found")}"; //
             string name = trackName.InnerText.Trim();
             string author = trackAuthor.InnerText.Trim();
 

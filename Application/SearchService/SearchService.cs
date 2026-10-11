@@ -27,7 +27,7 @@ public class SearchService
         var link = _musicSource.FormingLink(userInput);
         var doc = await web.LoadFromWebAsync(link);
 
-        return _parser.ParseSource(doc, _musicSource.ParseTags);
+        return _parser.ParseSource(doc, _musicSource.ParseTags, _musicSource.UrlPrefix);
     }
 
 }
