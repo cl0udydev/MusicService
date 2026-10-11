@@ -10,10 +10,10 @@ public class SearchService
     private MusicSource _musicSource;
     private Parser _parser;
 
-    public SearchService(MusicSource source, Parser parser)
+    public SearchService(MusicSource source)
     {
         _musicSource = source;
-        _parser = parser;
+        _parser = new();
     }
 
     public void ChangeSource(MusicSource souce)
