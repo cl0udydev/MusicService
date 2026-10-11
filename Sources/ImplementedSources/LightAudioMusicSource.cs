@@ -4,7 +4,7 @@ public class LightAudioMusicSource: MusicSource
 {
     public LightAudioMusicSource()
     {
-        SourceLink = "https://web.ligaudio.ru/mp3/";
+        UrlPrefix = "";
         ParseTags = new()
         {
             {TrackSourceType.General, new TrackSourceParseRule("item", "div")}, // amplitude-song-container
@@ -17,6 +17,6 @@ public class LightAudioMusicSource: MusicSource
 
     public override string FormingLink(string userInput)
     {
-        return $"{SourceLink}{userInput.Replace(" ", "%20")}";
+        return $"https://web.ligaudio.ru/mp3/{userInput.Replace(" ", "%20")}";
     }
 }

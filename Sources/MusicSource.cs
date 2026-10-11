@@ -5,12 +5,12 @@ namespace MusicService.Sources;
 // music site/source class
 public abstract class MusicSource
 {
-    public string SourceLink { get; set; }
+    public string UrlPrefix { get; set; } // prefix for track link
     public Dictionary<TrackSourceType, TrackSourceParseRule> ParseTags { get; protected set; }
 
     public MusicSource() // constructor-stub
     {
-        SourceLink = "";
+        UrlPrefix = "";
         ParseTags = new();
     }
 
