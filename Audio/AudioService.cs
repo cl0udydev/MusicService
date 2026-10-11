@@ -6,7 +6,7 @@ namespace MusicService.Audio;
 public class AudioService
 {
     private MediaFoundationReader? _mediaReader;
-    private IWavePlayer _outputDevice;
+    private WasapiPlayer _outputDevice;
     private string? _currentTrackUrl;
 
     public AudioService()
@@ -50,6 +50,13 @@ public class AudioService
             _outputDevice.Pause();
         }
     }
+
+    public void SetVolume(float volume)
+    {
+        _outputDevice.Volume = volume;
+    }
+
+    public double CurrentPosition => _outputDevice.GetPosition();
 
 
 }
