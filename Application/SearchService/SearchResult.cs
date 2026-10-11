@@ -14,7 +14,7 @@ public readonly struct SearchResult
     {
         if (type != SearchResultType.Successfully)
         {
-            throw new ArgumentException($"Incoming SearchResultType: {type}, at incoming tracks it must be Successfully");
+            throw new ArgumentException(nameof(type), "here incoming SearchResultType must be Successfully");
         }
         Type = type;
         Tracks = tracks;
@@ -24,7 +24,7 @@ public readonly struct SearchResult
     {
         if (type == SearchResultType.Successfully)
         {
-            throw new ArgumentException($"Incoming SearchResultType: {type}, in the absence tracks it must be different");
+            throw new ArgumentException(nameof(type), "here incoming SearchResultType must be Failed");
         }
         Type = type;
     }
