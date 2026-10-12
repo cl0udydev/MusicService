@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using NAudio.Wave;
+using System;
 
 namespace MusicService.Audio;
 
@@ -8,6 +9,10 @@ public class AudioService
     private MediaFoundationReader? _mediaReader;
     private WasapiPlayer _outputDevice;
     private string? _currentTrackUrl;
+    public long CurrentPosition => _mediaReader?.Position ?? 0;
+    public double TotalSeconds => _mediaReader?.TotalTime.TotalSeconds ?? 0;
+    public double CurrentSeconds => _mediaReader?.CurrentTime.TotalSeconds ?? 0;
+
 
     public AudioService()
     {
@@ -29,9 +34,18 @@ public class AudioService
 
         _currentTrackUrl = url;
 
-        _mediaReader = await Task.Run(() => new MediaFoundationReader(url));
-        _outputDevice.Init(_mediaReader);
-        _outputDevice.Play();
+        try
+        {
+            _mediaReader = await Task.Run(() => new MediaFoundationReader(url));
+            _outputDevice.Init(_mediaReader);
+            _outputDevice.Play();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Streaming error: {ex.Message}");
+            Stop();
+            throw; 
+        }
     }
 
     public void Stop()
@@ -56,7 +70,13 @@ public class AudioService
         _outputDevice.Volume = volume;
     }
 
-    public double CurrentPosition => _outputDevice.GetPosition();
-
-
+    public void Seek(double targetSeconds)
+    {
+        if (_mediaReader != null)
+        {
+            // Ограничиваем перемотку рамками трека
+            double safeSeconds = Math.Clamp(targetSeconds, 0, TotalSeconds);
+            _mediaReader.CurrentTime = TimeSpan.FromSeconds(safeSeconds);
+        }
+    }
 }
