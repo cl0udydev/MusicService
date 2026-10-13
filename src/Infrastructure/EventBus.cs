@@ -7,9 +7,10 @@ internal sealed class EventBus
 {
     private EventBus(){}
 
-    public static event Action<StoppedEventArgs> TrackFinished;
+    public static event Action<StoppedEventArgs>? TrackFinished;
 
-    public static void EmitTrackFinished(StoppedEventArgs args)
+
+    public static void EmitTrackFinished(object? sender, StoppedEventArgs args)
     {
         TrackFinished?.Invoke(args);
     }
