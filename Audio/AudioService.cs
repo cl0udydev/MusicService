@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
 using NAudio.Wave;
 using System;
+using MusicService.Infrastructure;
 
 namespace MusicService.Audio;
 
-public class AudioService
+public class AudioService : IDisposable
 {
     private MediaFoundationReader? _mediaReader;
     private WasapiPlayer _outputDevice;
@@ -17,6 +18,15 @@ public class AudioService
     public AudioService()
     {
         _outputDevice = new WasapiPlayerBuilder().Build();
+        _outputDevice.PlaybackStopped += EventBus.EmitTrackFinished;
+    }
+
+
+    public void Dispose()
+    {
+        _outputDevice.PlaybackStopped -= EventBus.EmitTrackFinished;
+        Stop();
+        _outputDevice.Dispose();
     }
 
     public async Task PlayAsync(string url)
@@ -74,7 +84,6 @@ public class AudioService
     {
         if (_mediaReader != null)
         {
-            // Ограничиваем перемотку рамками трека
             double safeSeconds = Math.Clamp(targetSeconds, 0, TotalSeconds);
             _mediaReader.CurrentTime = TimeSpan.FromSeconds(safeSeconds);
         }
