@@ -6,7 +6,7 @@ using System;
 
 namespace MusicService.Applic;
 
-public class PlaybackController : IDisposable
+public class PlaybackController
 {
     private Track? currentTrack;
     private Playlist? playlist;
@@ -20,11 +20,6 @@ public class PlaybackController : IDisposable
         EventBus.TrackFinished += OnTrackFinished;
     }
 
-    public void Dispose()
-    {
-        EventBus.TrackFinished -= OnTrackFinished;
-        _audioService.Dispose();
-    }
 
     private void OnTrackFinished(StoppedEventArgs args)
     {

@@ -5,7 +5,7 @@ using MusicService.Infrastructure;
 
 namespace MusicService.Audio;
 
-public class AudioService : IDisposable
+public class AudioService
 {
     private MediaFoundationReader? _mediaReader;
     private WasapiPlayer _outputDevice;
@@ -19,14 +19,6 @@ public class AudioService : IDisposable
     {
         _outputDevice = new WasapiPlayerBuilder().Build();
         _outputDevice.PlaybackStopped += EventBus.EmitTrackFinished;
-    }
-
-
-    public void Dispose()
-    {
-        _outputDevice.PlaybackStopped -= EventBus.EmitTrackFinished;
-        Stop();
-        _outputDevice.Dispose();
     }
 
     public async Task PlayAsync(string url)
