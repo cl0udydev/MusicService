@@ -1,6 +1,6 @@
 using MusicService.Sources;
-using HtmlAgilityPack;
 using System.Threading.Tasks;
+using MusicService.Infrastructure;
 
 namespace MusicService.Applic.SearchService;
 
@@ -9,11 +9,13 @@ public class SearchService
 {
     private MusicSource _musicSource;
     private Parser _parser;
+    private HttpService _httpService;
 
     public SearchService(MusicSource source)
     {
         _musicSource = source;
         _parser = new();
+        _httpService = new();
     }
 
     public void ChangeSource(MusicSource souce)
@@ -23,9 +25,8 @@ public class SearchService
 
     public async Task<SearchResult> SearchTracks(string userInput)
     {
-        var web = new HtmlWeb();
         var link = _musicSource.FormingLink(userInput);
-        var doc = await web.LoadFromWebAsync(link);
+        var doc = await _httpService.LoadHtml(link);
 
         return _parser.ParseSource(doc, _musicSource.ParseTags, _musicSource.UrlPrefix);
     }
