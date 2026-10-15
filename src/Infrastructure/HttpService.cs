@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
@@ -7,7 +8,15 @@ internal sealed class HttpService
 {
     public async Task<HtmlDocument> LoadHtml(string url)
     {
-        var web = new HtmlWeb();
-        return await web.LoadFromWebAsync(url);
+        try
+        {
+            var web = new HtmlWeb();
+            var doc = await web.LoadFromWebAsync(url); 
+            return doc;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 }
