@@ -44,9 +44,7 @@ public class AudioService
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Streaming error: {ex.Message}");
-            Stop();
-            throw; 
+            NetworkErrorsSystem.EmitNetworkError(ex, NetworkErrorType.PlaybackError);
         }
     }
 

@@ -6,7 +6,7 @@ namespace MusicService.Infrastructure;
 
 internal sealed class HttpService
 {
-    public async Task<HtmlDocument> LoadHtml(string url)
+    public async Task<HtmlDocument?> LoadHtml(string url)
     {
         try
         {
@@ -16,7 +16,8 @@ internal sealed class HttpService
         }
         catch (Exception ex)
         {
-            throw;
+            NetworkErrorsSystem.EmitNetworkError(ex, NetworkErrorType.SearchError);
+            return null;
         }
     }
 }
