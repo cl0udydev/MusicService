@@ -21,9 +21,8 @@ public class PlaybackController
     }
 
 
-    private void OnTrackFinished(StoppedEventArgs args)
+    private void OnTrackFinished()
     {
-        if (args.Exception != null) // here block shema
         if (isLooped)
         {
             PlayTrackAsync();

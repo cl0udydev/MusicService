@@ -5,11 +5,11 @@ namespace MusicService.Infrastructure;
 
 internal static class EventBus
 {
-    public static event Action<StoppedEventArgs>? TrackFinished;
+    public static event Action? TrackFinished;
 
 
-    public static void EmitTrackFinished(object? sender, StoppedEventArgs args)
+    public static void EmitTrackFinished()
     {
-        TrackFinished?.Invoke(args);
+        TrackFinished?.Invoke();
     }
 }

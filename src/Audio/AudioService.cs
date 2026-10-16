@@ -10,6 +10,7 @@ public class AudioService
     private MediaFoundationReader? _mediaReader;
     private WasapiPlayer _outputDevice;
     private string? _currentTrackUrl;
+    private PlaybackStopReason? _requestedStopReason;
     public long CurrentPosition => _mediaReader?.Position ?? 0;
     public double TotalSeconds => _mediaReader?.TotalTime.TotalSeconds ?? 0;
     public double CurrentSeconds => _mediaReader?.CurrentTime.TotalSeconds ?? 0;
@@ -18,7 +19,24 @@ public class AudioService
     public AudioService()
     {
         _outputDevice = new WasapiPlayerBuilder().Build();
-        _outputDevice.PlaybackStopped += EventBus.EmitTrackFinished;
+        _outputDevice.PlaybackStopped += OnPlaybackStopped;
+    }
+
+    private void OnPlaybackStopped(object? sender, StoppedEventArgs args)
+    {
+        if (args.Exception != null)
+        {
+            NetworkErrorsSystem.EmitNetworkError(args.Exception, NetworkErrorType.PlaybackError);
+            return;
+        }
+
+        if (_requestedStopReason != null)
+        {
+            _requestedStopReason = null;
+            return;
+        }
+
+        EventBus.EmitTrackFinished();
     }
 
     public async Task PlayAsync(string url)
@@ -26,14 +44,12 @@ public class AudioService
         if (url == _currentTrackUrl)
         {
             if (_outputDevice.PlaybackState != PlaybackState.Playing)
-            {
                 _outputDevice.Play();
-            }
+
             return;
         }
 
-        Stop();
-
+        Stop(PlaybackStopReason.TrackSwitch);
         _currentTrackUrl = url;
 
         try
@@ -44,15 +60,16 @@ public class AudioService
         }
         catch (Exception ex)
         {
-            NetworkErrorsSystem.EmitNetworkError(ex, NetworkErrorType.PlaybackError);
+            NetworkErrorsSystem.EmitNetworkError(ex, NetworkErrorType.LoadingError);
         }
     }
 
-    public void Stop()
+    public void Stop(PlaybackStopReason reason = PlaybackStopReason.UserStopped)
     {
+        if (_outputDevice.PlaybackState != PlaybackState.Stopped) _requestedStopReason = reason;
         _outputDevice.Stop();
-        _mediaReader?.Dispose();
 
+        _mediaReader?.Dispose();
         _mediaReader = null;
         _currentTrackUrl = null;
     }
