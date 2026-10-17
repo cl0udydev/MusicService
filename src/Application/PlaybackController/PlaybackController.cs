@@ -19,7 +19,6 @@ public class PlaybackController: IPlaylistOwnable
         EventBus.TrackFinished += OnTrackFinished;
     }
 
-
     private void OnTrackFinished()
     {
         if (isLooped)
@@ -31,6 +30,7 @@ public class PlaybackController: IPlaylistOwnable
             PlayNextTrack();
         }
     }
+
     public void ChangePlaylist(Playlist newPlaylist, int index)
     {
         if (playlist?.Id != newPlaylist.Id) return;
