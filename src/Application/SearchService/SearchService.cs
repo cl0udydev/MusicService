@@ -23,14 +23,15 @@ public class SearchService
         _musicSource = souce;
     }
 
-    public async Task<SearchResult?> SearchTracks(string userInput)
+    public async Task<SearchResult> SearchTracks(string userInput)
     {
         var link = _musicSource.FormingLink(userInput);
         var doc = await _httpService.LoadHtml(link);
         
-        if (doc == null) return null;
+        SearchResult result;
 
-        SearchResult? result = _parser.ParseSource(doc, _musicSource.ParseTags, _musicSource.UrlPrefix);
+        if (doc == null) result = new SearchResult(SearchResultType.Failed);
+        else result = _parser.ParseSource(doc, _musicSource.ParseTags, _musicSource.UrlPrefix);
 
         return result;
     }
