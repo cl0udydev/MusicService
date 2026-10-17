@@ -1,4 +1,4 @@
-namespace MusicService.Audio;
+namespace MusicService.Domain;
 
 public enum PlaybackStopReason
 {
