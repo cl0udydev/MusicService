@@ -1,15 +1,14 @@
 using MusicService.Audio;
 using MusicService.Domain;
 using MusicService.Infrastructure;
-using NAudio.Wave;
-using System;
 
-namespace MusicService.Applic;
+namespace MusicService.Applic.PlaybackController;
 
-public class PlaybackController
+public class PlaybackController: IPlaylistOwnable
 {
     private Track? currentTrack;
     private Playlist? playlist;
+    public Playlist? Playlist => playlist;
     private int _index;
     private AudioService _audioService;
     private bool isLooped;
@@ -31,6 +30,15 @@ public class PlaybackController
         {
             PlayNextTrack();
         }
+    }
+    public void ChangePlaylist(Playlist newPlaylist, int index)
+    {
+        if (playlist?.Id != newPlaylist.Id) return;
+
+        StopTrack();
+        playlist = newPlaylist;
+        _index = index;
+        currentTrack = playlist.Tracks[_index];
     }
 
     public void PlayNextTrack()
