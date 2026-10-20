@@ -8,7 +8,7 @@ namespace MusicService.Infrastructure.Storage.DataModels;
 
 public class PlaylistsDataModel: IPlaylistsDataModel
 {
-    private string filePath;
+    private readonly string filePath;
     public string FilePath => filePath;
     
 
