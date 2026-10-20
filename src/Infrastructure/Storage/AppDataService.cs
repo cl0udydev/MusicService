@@ -10,7 +10,9 @@ internal static class AppDataService
         Environment.SpecialFolder.LocalApplicationData), "MusicService");
 
     private static IPlaylistsDataModel playlistsModel = new PlaylistsDataModel(appDataDirectory);
+    private static IIndicesDataModel indicesModel = new IndicesDataModel(appDataDirectory);
     public static IPlaylistsDataModel Playlists => playlistsModel;
+    public static IIndicesDataModel Indices => indicesModel;
 
 
     public static void InitAppData()
