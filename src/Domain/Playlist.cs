@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MusicService.Domain;
 
@@ -8,7 +9,9 @@ public class Playlist
 {
     public int Id { get; }
     private readonly List<Track> _tracks;
-    public IReadOnlyList<Track> Tracks => _tracks;
+
+    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
+    public List<Track> Tracks => _tracks;
 
 
     public Playlist(int id)
