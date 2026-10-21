@@ -31,6 +31,7 @@ public class PlaybackController: IPlaylistOwnable
         }
     }
 
+
     public void ChangePlaylist(Playlist newPlaylist, int index)
     {
         if (playlist?.Id != newPlaylist.Id) return;
