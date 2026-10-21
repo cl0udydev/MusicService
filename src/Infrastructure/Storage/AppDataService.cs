@@ -19,5 +19,6 @@ internal static class AppDataService
     {
         Directory.CreateDirectory(appDataDirectory);
         playlistsModel.Init();
+        indicesModel.Init();
     }
 }
