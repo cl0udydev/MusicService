@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using NAudio.Wave;
 using System;
 using MusicService.Infrastructure;
+using MusicService.Domain;
 
 namespace MusicService.Audio;
 

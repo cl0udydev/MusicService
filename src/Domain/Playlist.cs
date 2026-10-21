@@ -11,7 +11,7 @@ public class Playlist
     private readonly List<Track> _tracks;
 
     [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
-    public List<Track> Tracks => _tracks;
+    public List<Track> Tracks => _tracks; // kludge that weakens encapsulation
 
 
     public Playlist(int id)
