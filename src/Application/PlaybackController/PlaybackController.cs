@@ -35,14 +35,14 @@ public class PlaybackController: IPlaylistOwnable
 
     public void ChangePlaylist(Playlist newPlaylist, int index)
     {
-        if (newPlaylist.Tracks.Count == 0) throw new ArgumentException(nameof(newPlaylist), $"New playlist must contains at least one track");
-        if (index < 0) throw new ArgumentException(nameof(index), $"New playlist index must be more than 0");
-        if (index >= newPlaylist.Tracks.Count) throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index out of range");
-
         if (playlist != null)
         {
             if (playlist.Id == newPlaylist.Id) return;
         }
+
+        if (newPlaylist.Tracks.Count == 0) throw new ArgumentException($"New playlist must contains at least one track", nameof(newPlaylist));
+        if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index must be more than 0");
+        if (index >= newPlaylist.Tracks.Count) throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index out of range");
 
         StopTrack();
         playlist = newPlaylist;
