@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using MusicService.Audio;
 using MusicService.Domain;
 using MusicService.Infrastructure;
@@ -20,6 +21,7 @@ public class PlaybackController: IPlaylistOwnable
         EventBus.TrackFinished += OnTrackFinished;
     }
 
+
     private void OnTrackFinished()
     {
         if (isLooped)
@@ -40,9 +42,12 @@ public class PlaybackController: IPlaylistOwnable
             if (playlist.Id == newPlaylist.Id) return;
         }
 
-        if (newPlaylist.Tracks.Count == 0) throw new ArgumentException($"New playlist must contains at least one track", nameof(newPlaylist));
-        if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index must be more than 0");
-        if (index >= newPlaylist.Tracks.Count) throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index out of range");
+        if (newPlaylist.Tracks.Count == 0) 
+            throw new ArgumentException($"New playlist must contains at least one track", nameof(newPlaylist));
+        if (index < 0) 
+            throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index must be more than 0");
+        if (index >= newPlaylist.Tracks.Count) 
+            throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index out of range");
 
         StopTrack();
         playlist = newPlaylist;
@@ -50,40 +55,45 @@ public class PlaybackController: IPlaylistOwnable
         currentTrack = playlist.Tracks[_index];
     }
 
-    public void PlayNextTrack()
+
+    public async Task PlayTrackAsync()
     {
-        if (playlist != null)
-        {
-            _index = (_index + 1) % playlist.Tracks.Count;
-            currentTrack = playlist.Tracks[_index];
-            PlayTrackAsync();
-        }
+        if (currentTrack == null) return;
+
+        await _audioService.PlayAsync(currentTrack.Link);
     }
 
-    public void PlayPreviousTrack()
+
+    public async Task PlayNextTrackAsync()
     {
-        if (playlist != null)
-        {
-            _index = (_index - 1 + playlist.Tracks.Count) % playlist.Tracks.Count;
-            currentTrack = playlist.Tracks[_index];
-            PlayTrackAsync();
-        }
+        if (playlist == null || playlist.Tracks.Count == 0) return;
+
+        _index = (_index + 1) % playlist.Tracks.Count;
+        currentTrack = playlist.Tracks[_index];
+
+        await PlayTrackAsync();
     }
+
+
+    public async Task PlayPreviousTrackAsync()
+    {
+        if (playlist == null || playlist.Tracks.Count == 0) return;
+
+        _index = (_index - 1 + playlist.Tracks.Count) % playlist.Tracks.Count;
+        currentTrack = playlist.Tracks[_index];
+        
+        await PlayTrackAsync();
+    }
+
 
     public void ChangeLooped() => isLooped = !isLooped;
 
-    public async void PlayTrackAsync()
-    {
-        if (currentTrack != null)
-        {
-            await _audioService.PlayAsync(currentTrack.Link);
-        }
-    }
 
     public void StopTrack()
     {
         _audioService.Stop();
     }
+
 
     public void PauseTrack()
     {
