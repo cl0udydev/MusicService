@@ -22,15 +22,15 @@ public class PlaybackController: IPlaylistOwnable
     }
 
 
-    private void OnTrackFinished()
+    private async void OnTrackFinished()
     {
         if (isLooped)
         {
-            PlayTrackAsync();
+            await PlayTrackAsync();
         }
         else
         {
-            PlayNextTrack();
+            await PlayNextTrackAsync();
         }
     }
 
