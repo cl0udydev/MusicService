@@ -23,6 +23,7 @@ public class AudioService
         _outputDevice.PlaybackStopped += OnPlaybackStopped;
     }
 
+
     private void OnPlaybackStopped(object? sender, StoppedEventArgs args)
     {
         if (args.Exception != null)
@@ -39,6 +40,7 @@ public class AudioService
 
         EventBus.EmitTrackFinished();
     }
+
 
     public async Task PlayAsync(string url)
     {
@@ -65,6 +67,7 @@ public class AudioService
         }
     }
 
+
     public void Stop(PlaybackStopReason reason = PlaybackStopReason.UserStopped)
     {
         if (_outputDevice.PlaybackState != PlaybackState.Stopped) _requestedStopReason = reason;
@@ -75,6 +78,7 @@ public class AudioService
         _currentTrackUrl = null;
     }
 
+
     public void Pause()
     {
         if (_outputDevice.PlaybackState == PlaybackState.Playing)
@@ -83,10 +87,12 @@ public class AudioService
         }
     }
 
+
     public void SetVolume(float volume)
     {
         _outputDevice.Volume = volume;
     }
+
 
     public void Seek(double targetSeconds)
     {
@@ -95,5 +101,23 @@ public class AudioService
             double safeSeconds = Math.Clamp(targetSeconds, 0, TotalSeconds);
             _mediaReader.CurrentTime = TimeSpan.FromSeconds(safeSeconds);
         }
+    }
+
+
+    private void CreateOutputDevice()
+    {
+        if (_outputDevice != null) return;
+        
+        _outputDevice = new WasapiPlayerBuilder().Build();
+        _outputDevice.PlaybackStopped += OnPlaybackStopped;
+    }
+
+    
+    private void DeleteOutputDevice()
+    {
+        if (_outputDevice == null) return;
+
+        _outputDevice.PlaybackStopped -= OnPlaybackStopped;
+        _outputDevice.Dispose();
     }
 }
