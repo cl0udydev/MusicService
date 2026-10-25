@@ -6,7 +6,7 @@ using MusicService.Infrastructure;
 
 namespace MusicService.Applic.PlaybackController;
 
-public class PlaybackController: IPlaylistOwnable
+public class PlaybackController
 {
     private Track? currentTrack;
     private Playlist? playlist;
