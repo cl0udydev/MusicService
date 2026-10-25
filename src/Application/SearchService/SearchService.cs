@@ -1,7 +1,6 @@
 using MusicService.Sources;
 using System.Threading.Tasks;
 using MusicService.Infrastructure;
-using MusicService.Domain;
 
 namespace MusicService.Applic.SearchService;
 

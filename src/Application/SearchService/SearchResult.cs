@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using MusicService.Domain;
 
-namespace MusicService.Domain;
+namespace MusicService.Applic.SearchService;
 
 // The result returned by the Parser
 public readonly struct SearchResult
