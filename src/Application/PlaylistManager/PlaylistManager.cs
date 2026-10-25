@@ -9,14 +9,14 @@ namespace MusicService.Applic.PlaylistManager;
 public class PlaylistManager
 {
     private Dictionary<int, Playlist> playlists;
-    private int maxFreeId;
-    private const int pullCoef = 5;
+    private int allocatedIdLimit;
+    private const int PoolCoefficient = 5;
     private Queue<int> indicesPull;
 
 
     private PlaylistManager()
     {
-        maxFreeId = 0; // stub
+        allocatedIdLimit = 0; // stub
         playlists = new(); // stub
         indicesPull = new(); // stub
     }
@@ -24,17 +24,18 @@ public class PlaylistManager
     public static async Task<PlaylistManager> CreateAsync()
     {
         var manager = new PlaylistManager();
+
         await manager.InitAsync();
-        
+
         return manager;
     }
 
     private async Task InitAsync()
     {
-        maxFreeId = await AppDataService.Indices.Load();
+        allocatedIdLimit = await AppDataService.Indices.Load();
         playlists = await AppDataService.Playlists.Load();
 
-        foreach (var index in Enumerable.Range(1, maxFreeId))
+        foreach (var index in Enumerable.Range(1, allocatedIdLimit))
         {
             if (!playlists.ContainsKey(index))
             {
@@ -46,9 +47,7 @@ public class PlaylistManager
 
     public async Task CreatePlaylist()
     {
-        var index = TakeIndex();
-
-        await AppDataService.Indices.Save(maxFreeId);
+        var index = await TakeIndex();
 
         Playlist newPLaylist = new Playlist(index);
         playlists.Add(index, newPLaylist);
@@ -70,11 +69,11 @@ public class PlaylistManager
     }
 
 
-    private int TakeIndex()
+    private async Task<int> TakeIndex()
     {
         if (indicesPull.Count == 0)
         {
-            ExpandPull();
+            await ExpandPull();
         }
 
         var index = indicesPull.Dequeue();
@@ -83,16 +82,17 @@ public class PlaylistManager
     }
 
 
-    private void ExpandPull()
+    private async Task ExpandPull()
     {
-        var range = Enumerable.Range(maxFreeId + 1, pullCoef);
+        var range = Enumerable.Range(allocatedIdLimit + 1, PoolCoefficient);
 
         foreach (var i in range)
         {
             indicesPull.Enqueue(i);
         }
 
-        maxFreeId += pullCoef;
+        allocatedIdLimit += PoolCoefficient;
 
+        await AppDataService.Indices.Save(allocatedIdLimit);
     }
 }
