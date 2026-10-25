@@ -14,14 +14,22 @@ public class PlaylistManager
     private Queue<int> indicesPull;
 
 
-    public PlaylistManager()
+    private PlaylistManager()
     {
         maxFreeId = 0; // stub
         playlists = new(); // stub
         indicesPull = new(); // stub
     }
 
-    public async Task InitAsync()
+    public static async Task<PlaylistManager> CreateAsync()
+    {
+        var manager = new PlaylistManager();
+        await manager.InitAsync();
+        
+        return manager;
+    }
+
+    private async Task InitAsync()
     {
         maxFreeId = await AppDataService.Indices.Load();
         playlists = await AppDataService.Playlists.Load();
