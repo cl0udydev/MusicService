@@ -9,17 +9,19 @@ namespace MusicService.Applic.PlaylistManager;
 public class PlaylistManager
 {
     private Dictionary<int, Playlist> playlists;
+    public IReadOnlyDictionary<int, Playlist> Playlists => playlists;
     private int allocatedIdLimit;
     private const int PoolCoefficient = 5;
-    private Queue<int> indicesPull;
+    private Queue<int> availableIds;
 
 
     private PlaylistManager()
     {
         allocatedIdLimit = 0; // stub
         playlists = new(); // stub
-        indicesPull = new(); // stub
+        availableIds = new(); // stub
     }
+
 
     public static async Task<PlaylistManager> CreateAsync()
     {
@@ -30,6 +32,7 @@ public class PlaylistManager
         return manager;
     }
 
+
     private async Task InitAsync()
     {
         allocatedIdLimit = await AppDataService.Indices.Load();
@@ -39,31 +42,54 @@ public class PlaylistManager
         {
             if (!playlists.ContainsKey(index))
             {
-                indicesPull.Enqueue(index);
+                availableIds.Enqueue(index);
             }
         }
     }
 
 
-    public async Task CreatePlaylist()
+    public async Task<Playlist> CreatePlaylist()
     {
         var index = await TakeIndex();
 
-        Playlist newPLaylist = new Playlist(index);
-        playlists.Add(index, newPLaylist);
+        Playlist newPlaylist = new Playlist(index);
+        playlists.Add(index, newPlaylist);
+
+        await AppDataService.Playlists.Save(playlists);
+
+        return newPlaylist;
+    }
+
+
+    public async Task DeletePlaylist(int id)
+    {
+        if (!playlists.Remove(id))
+            throw new KeyNotFoundException($"Playlist with ID {id} was not found.");
+
+        
+        availableIds.Enqueue(id);
 
         await AppDataService.Playlists.Save(playlists);
     }
 
 
-    public async Task DeletePlayList(int id)
+    public async Task AddTrackToPlaylist(int id, Track track)
     {
-        if (!playlists.Remove(id))
-        {
+        if (!playlists.ContainsKey(id))
             throw new KeyNotFoundException($"Playlist with ID {id} was not found.");
-        }
         
-        indicesPull.Enqueue(id);
+        playlists[id].AddTrack(track);
+
+        await AppDataService.Playlists.Save(playlists);
+    }
+
+    
+    public async Task DeleteTrackFromPlaylist(int id, Track track)
+    {
+        if (!playlists.ContainsKey(id))
+            throw new KeyNotFoundException($"Playlist with ID {id} was not found.");
+        
+        playlists[id].RemoveTrack(track);
 
         await AppDataService.Playlists.Save(playlists);
     }
@@ -71,28 +97,28 @@ public class PlaylistManager
 
     private async Task<int> TakeIndex()
     {
-        if (indicesPull.Count == 0)
+        if (availableIds.Count == 0)
         {
-            await ExpandPull();
+            await ExpandPool();
         }
 
-        var index = indicesPull.Dequeue();
+        var index = availableIds.Dequeue();
         
         return index;
     }
 
 
-    private async Task ExpandPull()
+    private async Task ExpandPool()
     {
         var range = Enumerable.Range(allocatedIdLimit + 1, PoolCoefficient);
-
-        foreach (var i in range)
-        {
-            indicesPull.Enqueue(i);
-        }
 
         allocatedIdLimit += PoolCoefficient;
 
         await AppDataService.Indices.Save(allocatedIdLimit);
+
+        foreach (var i in range)
+        {
+            availableIds.Enqueue(i);
+        }
     }
 }
