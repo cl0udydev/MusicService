@@ -18,7 +18,7 @@ public class PlaybackController
     public PlaybackController(AudioService audioService)
     {
         _audioService = audioService;
-        EventBus.TrackFinished += OnTrackFinished;
+        _audioService.TrackFinished += OnTrackFinished;
     }
 
 

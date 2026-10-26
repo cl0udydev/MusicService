@@ -12,6 +12,7 @@ public class AudioService
     private WasapiPlayer? _outputDevice;
     private string? _currentTrackUrl;
     private PlaybackStopReason? _requestedStopReason;
+    public event Action? TrackFinished;
     public long CurrentPosition => _mediaReader?.Position ?? 0;
     public double TotalSeconds => _mediaReader?.TotalTime.TotalSeconds ?? 0;
     public double CurrentSeconds => _mediaReader?.CurrentTime.TotalSeconds ?? 0;
@@ -32,7 +33,8 @@ public class AudioService
             return;
         }
 
-        EventBus.EmitTrackFinished();
+        TrackFinished?.Invoke();
+        // EventBus.EmitTrackFinished();
     }
 
 
