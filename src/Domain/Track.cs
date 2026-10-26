@@ -9,13 +9,15 @@ public record class Track
     public string Name { get; }
     public string Author { get; }
     public TimeSpan Duration { get; }
+    public string ImageLink { get; }
 
-    public Track(string link, string name, string author, TimeSpan duration)
+    public Track(string link, string name, string author, TimeSpan duration, string imageLink)
     {
         Link = link;
         Name = name;
         Author = author;
         Duration = duration;
+        ImageLink = imageLink;
     }
     public override string ToString()
     {
