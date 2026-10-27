@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HtmlAgilityPack;
 using MusicService.Sources;
 using MusicService.Domain;
+using System.Text;
 
 namespace MusicService.Applic.SearchService;
 
@@ -59,5 +60,38 @@ public class Parser
         }
 
         return new SearchResult(SearchResultType.Successfully, tracks);
+    }
+
+    public SearchResult ParseLyrics(HtmlDocument document)
+    {
+        HtmlNode? errorNode = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'render_404')]");
+
+        if (errorNode != null) return new SearchResult(SearchResultType.Failed);
+
+        HtmlNode? lyricsNode = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'Lyrics__Container-sc-12f9e8d3-1 jhVhlB')]");
+
+        if (lyricsNode == null) return new SearchResult(SearchResultType.Failed);
+
+        StringBuilder lyrics = new StringBuilder();
+
+        foreach (var child in lyricsNode.ChildNodes)
+        {
+            if (child.NodeType == HtmlNodeType.Text)
+            {
+                lyrics.Append(child.InnerText);
+            }
+            else if (child.Name == "br")
+            {
+                lyrics.AppendLine();
+            }
+            else 
+            {
+                lyrics.Append(child.InnerText);
+            }
+        }
+
+        var cleanLyrics = HtmlEntity.DeEntitize(lyrics.ToString().Trim()).ToString();
+
+        return new SearchResult(SearchResultType.Successfully, cleanLyrics);
     }
 }

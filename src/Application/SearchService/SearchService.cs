@@ -36,4 +36,16 @@ public class SearchService
         return result;
     }
 
+    
+    public async Task<SearchResult> SearchLyrics(string lyricsUrl)
+    {
+        var doc = await _httpService.LoadHtml(lyricsUrl);
+
+        SearchResult result;
+
+        if (doc == null) result = new SearchResult(SearchResultType.Failed);
+        else result = _parser.ParseLyrics(doc);
+
+        return result; 
+    }
 }
