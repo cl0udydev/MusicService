@@ -9,15 +9,9 @@ namespace MusicService.Applic.SearchService;
 // parser html document to SearchResult => SearchService => ViewModel
 public class Parser
 {
-    public SearchResult ParseSource(HtmlDocument document, Dictionary<TrackSourceType, TrackSourceParseRule> parseRules, string UrlPrefix)
+    public SearchResult ParseSource(HtmlDocument document, IMusicSource musicSource)
     {
-        // take html class and tag from parseRules and inserts them to SelectNodes args
-        var htmlTag = parseRules[TrackSourceType.General].HtmlTag;
-        var htmlClass = parseRules[TrackSourceType.General].HtmlClass;
-
-        HtmlNodeCollection? trackNodes = document.DocumentNode.SelectNodes(
-            $"//{htmlTag}[contains(@class, '{htmlClass}')]"
-        );
+        HtmlNodeCollection? trackNodes = document.DocumentNode.SelectNodes(musicSource.GeneralNodeArgs);
 
         if (trackNodes == null) return new SearchResult(SearchResultType.Failed);
 
@@ -25,44 +19,35 @@ public class Parser
 
         foreach (HtmlNode trackNode in trackNodes)
         {
-            HtmlNode? trackName = trackNode.SelectSingleNode(
-                $".//{parseRules[TrackSourceType.Name].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Name].HtmlClass}')]"
-            );
+            HtmlNode? trackName = musicSource.GetNameNode(trackNode);
 
-            HtmlNode? trackAuthor = trackNode.SelectSingleNode(
-                $".//{parseRules[TrackSourceType.Author].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Author].HtmlClass}')]"
-            );
+            HtmlNode? trackAuthor = musicSource.GetAuthorNode(trackNode);
 
-            HtmlNode? trackDuration = trackNode.SelectSingleNode(
-                $".//{parseRules[TrackSourceType.Duration].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Duration].HtmlClass}')]"
-            );
+            HtmlNode? trackDuration = musicSource.GetDurationNode(trackNode);
 
-            HtmlNode? UrlNode = trackNode.SelectSingleNode(
-                $".//{parseRules[TrackSourceType.Link].HtmlTag}[contains(@class, '{parseRules[TrackSourceType.Link].HtmlClass}')]"
-            );
+            string? trackUrl = musicSource.GetLinkNode(trackNode);
+
+            string? trackImageLink = musicSource.GetImageLink(trackNode);
             
-            if (trackName == null || trackAuthor == null || trackDuration == null || UrlNode == null)
+            if (trackName == null || trackAuthor == null || trackDuration == null || trackUrl == null || trackImageLink == null)
             {
                 continue; 
             }
 
-            string trackUrl = $"{UrlPrefix}{UrlNode.GetAttributeValue("href", "not found")}"; //
             string name = trackName.InnerText.Trim();
             string author = trackAuthor.InnerText.Trim();
 
             TimeSpan duration = TimeSpan.Zero;
 
-            if (trackDuration != null)
-            {
-                string durationStr = trackDuration.InnerText.Trim(); 
+            string durationStr = trackDuration.InnerText.Trim(); 
 
-                if (TimeSpan.TryParseExact(durationStr, @"mm\:ss", null, out duration)) { }
-                else if (TimeSpan.TryParseExact(durationStr, @"m\:ss", null, out duration)) { }
-                else if (TimeSpan.TryParseExact(durationStr, @"h\:mm\:ss", null, out duration)) { }
-                else if (TimeSpan.TryParse(durationStr, out duration)) { }
-            }
+            if (TimeSpan.TryParseExact(durationStr, @"mm\:ss", null, out duration)) { }
+            else if (TimeSpan.TryParseExact(durationStr, @"m\:ss", null, out duration)) { }
+            else if (TimeSpan.TryParseExact(durationStr, @"h\:mm\:ss", null, out duration)) { }
+            else if (TimeSpan.TryParse(durationStr, out duration)) { }
 
-            Track track = new Track(trackUrl, name, author, duration);
+
+            Track track = new Track(trackUrl, name, author, duration, trackImageLink);
 
             tracks.Add(track);
         }

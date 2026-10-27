@@ -7,18 +7,18 @@ namespace MusicService.Applic.SearchService;
 // global class for search tracks on resources
 public class SearchService
 {
-    private MusicSource _musicSource;
+    private IMusicSource _musicSource;
     private Parser _parser;
     private HttpService _httpService;
 
-    public SearchService(MusicSource source)
+    public SearchService(IMusicSource source)
     {
         _musicSource = source;
         _parser = new();
         _httpService = new();
     }
 
-    public void ChangeSource(MusicSource souce)
+    public void ChangeSource(IMusicSource souce)
     {
         _musicSource = souce;
     }
@@ -31,7 +31,7 @@ public class SearchService
         SearchResult result;
 
         if (doc == null) result = new SearchResult(SearchResultType.Failed);
-        else result = _parser.ParseSource(doc, _musicSource.ParseTags, _musicSource.UrlPrefix);
+        else result = _parser.ParseSource(doc, _musicSource);
 
         return result;
     }
