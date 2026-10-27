@@ -9,7 +9,7 @@ public interface IMusicSource
     HtmlNode? GetNameNode(HtmlNode trackNode);
     HtmlNode? GetAuthorNode(HtmlNode trackNode);
     HtmlNode? GetDurationNode(HtmlNode trackNode);
-    HtmlNode? GetLinkNode(HtmlNode trackNode);
+    string? GetLinkNode(HtmlNode trackNode);
     string? GetImageLink(HtmlNode trackNode);
 
 }

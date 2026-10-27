@@ -14,8 +14,19 @@ public class LightAudioMusicSource: IMusicSource
 
     public HtmlNode? GetDurationNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//span[contains(@class, 'd')]");
 
-    public HtmlNode? GetLinkNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//a[contains(@class, 'down')]");
+    public string? GetLinkNode(HtmlNode trackNode)
+    {
+        HtmlNode? linkNode = trackNode.SelectSingleNode(".//a[contains(@class, 'down')]");
 
+        if (linkNode == null) return null;
+
+        string link = linkNode.GetAttributeValue("href", "");
+
+        if (link == "") return null;
+        
+        return link;
+    }
+        
     public string? GetImageLink(HtmlNode trackNode)
     {
         HtmlNode? imgNode = trackNode.SelectSingleNode("//img[@src]");

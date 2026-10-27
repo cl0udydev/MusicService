@@ -15,7 +15,18 @@ public class HitmoMusicSource: IMusicSource
 
     public HtmlNode? GetDurationNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//div[contains(@class, 'track__fulltime')]");
 
-    public HtmlNode? GetLinkNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//a[contains(@class, 'track__download-btn')]");
+    public string? GetLinkNode(HtmlNode trackNode)
+    {
+        HtmlNode? linkNode = trackNode.SelectSingleNode(".//a[contains(@class, 'track__download-btn')]");
+
+        if (linkNode == null) return null;
+
+        string link = linkNode.GetAttributeValue("href", "");
+
+        if (link == "") return null;
+        
+        return $"https://ru.hitmoz.org{link}";
+    }
 
     public string? GetImageLink(HtmlNode trackNode)
     {
@@ -34,5 +45,4 @@ public class HitmoMusicSource: IMusicSource
 
         return imgLink.Substring(startIdx, endIdx - startIdx);
     }
-
 }
