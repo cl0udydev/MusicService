@@ -1,22 +1,31 @@
+using HtmlAgilityPack;
+
 namespace MusicService.Sources;
 
-public class LightAudioMusicSource: MusicSource
+public class LightAudioMusicSource: IMusicSource
 {
-    public LightAudioMusicSource()
-    {
-        UrlPrefix = "";
-        ParseTags = new()
-        {
-            {TrackSourceType.General, new TrackSourceParseRule("item", "div")}, // amplitude-song-container
-            {TrackSourceType.Name, new TrackSourceParseRule("title", "span")},
-            {TrackSourceType.Author, new TrackSourceParseRule("autor", "span")},
-            {TrackSourceType.Duration, new TrackSourceParseRule("d", "span")},
-            {TrackSourceType.Link, new TrackSourceParseRule("down", "a")}
-        };
-    } 
+    public string GeneralNodeArgs { get; } = "//div[contains(@class, 'item')]";
 
-    public override string FormingLink(string userInput)
+    public string FormingLink(string userInput) => $"https://web.ligaudio.ru/mp3/{userInput.Replace(" ", "%20")}";
+    
+    public HtmlNode? GetNameNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//span[contains(@class, 'title')]");
+
+    public HtmlNode? GetAuthorNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//span[contains(@class, 'autor')]");
+
+    public HtmlNode? GetDurationNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//span[contains(@class, 'd')]");
+
+    public HtmlNode? GetLinkNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//a[contains(@class, 'down')]");
+
+    public string? GetImageLink(HtmlNode trackNode)
     {
-        return $"https://web.ligaudio.ru/mp3/{userInput.Replace(" ", "%20")}";
+        HtmlNode? imgNode = trackNode.SelectSingleNode("//img[@src]");
+
+        if (imgNode == null) return null;
+
+        string imgLink = imgNode.GetAttributeValue("src", "");
+
+        if (imgLink == "") return null;
+
+        return imgLink;
     }
 }

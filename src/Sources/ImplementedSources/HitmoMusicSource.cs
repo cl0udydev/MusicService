@@ -1,25 +1,38 @@
+using HtmlAgilityPack;
+
 namespace MusicService.Sources;
 
-public class HitmoMusicSource: MusicSource
+public class HitmoMusicSource: IMusicSource
 {
-    public HitmoMusicSource()
-    {
-        UrlPrefix = "https://ru.hitmoz.org";
-        ParseTags = new()
-        {
-            {TrackSourceType.General, new TrackSourceParseRule("tracks__item", "li")},
-            {TrackSourceType.Name, new TrackSourceParseRule("track__title", "div")},
-            {TrackSourceType.Author, new TrackSourceParseRule("track__desc", "div")},
-            {TrackSourceType.Duration, new TrackSourceParseRule("track__fulltime", "div")},
-            {TrackSourceType.Link, new TrackSourceParseRule("track__download-btn", "a")},
-        };
-    } 
+    private static readonly char[] UrlEndChars = new char[] {'\''};
+    public string GeneralNodeArgs { get; } = "//li[contains(@class, 'tracks__item')]";
 
-    public override string FormingLink(string userInput)
-    {
-        return $"https://ru.hitmoz.org/search?q={userInput.Replace(" ", "%20")}";
+    public string FormingLink(string userInput) => $"https://ru.hitmoz.org/search?q={userInput.Replace(" ", "%20")}";
 
-        // if userInput for example:"limp bizkit", then => "limp%20bizkit"
-        // and finally return => "https://ru.hitmoz.org/search?q=limp%20bizkit"
+    public HtmlNode? GetNameNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//div[contains(@class, 'track__title')]");
+
+    public HtmlNode? GetAuthorNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//div[contains(@class, 'track__desc')]");
+
+    public HtmlNode? GetDurationNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//div[contains(@class, 'track__fulltime')]");
+
+    public HtmlNode? GetLinkNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//a[contains(@class, 'track__download-btn')]");
+
+    public string? GetImageLink(HtmlNode trackNode)
+    {
+        HtmlNode? imgNode = trackNode.SelectSingleNode(".//div[contains(@class, 'track__img')]");
+
+        if (imgNode == null) return null;
+
+        string imgLink = imgNode.GetAttributeValue("style", "");
+
+        if (imgLink == "") return null;
+
+        int startIdx = imgLink.IndexOf("url(") + 5;
+        int endIdx = imgLink.IndexOfAny(UrlEndChars, startIdx);
+
+        if (endIdx == -1) return null;
+
+        return imgLink.Substring(startIdx, endIdx - startIdx);
     }
+
 }
