@@ -46,8 +46,9 @@ public class Parser
             else if (TimeSpan.TryParseExact(durationStr, @"h\:mm\:ss", null, out duration)) { }
             else if (TimeSpan.TryParse(durationStr, out duration)) { }
 
+            string lyricsLink = $"https://genius.com/{author.Replace(" ", "-")}-{name.Replace(" ", "-")}-lyrics";
 
-            Track track = new Track(trackUrl, name, author, duration, trackImageLink);
+            Track track = new Track(trackUrl, name, author, duration, trackImageLink, lyricsLink);
 
             tracks.Add(track);
         }
