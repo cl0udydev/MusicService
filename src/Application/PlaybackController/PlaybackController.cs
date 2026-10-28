@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using MusicService.Audio;
 using MusicService.Domain;
-using MusicService.Infrastructure;
 
 namespace MusicService.Applic.PlaybackController;
 
