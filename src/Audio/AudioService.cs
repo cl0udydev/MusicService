@@ -13,10 +13,13 @@ public class AudioService
     private string? _currentTrackUrl;
     private PlaybackStopReason? _requestedStopReason;
     public event Action? TrackFinished;
+    private float volume;
     public long CurrentPosition => _mediaReader?.Position ?? 0;
     public double TotalSeconds => _mediaReader?.TotalTime.TotalSeconds ?? 0;
     public double CurrentSeconds => _mediaReader?.CurrentTime.TotalSeconds ?? 0;
 
+
+    public void ResetUrl() => _currentTrackUrl = null; 
 
     private void OnPlaybackStopped(object? sender, StoppedEventArgs args)
     {
@@ -34,7 +37,6 @@ public class AudioService
         }
 
         TrackFinished?.Invoke();
-        // EventBus.EmitTrackFinished();
     }
 
 
@@ -56,6 +58,7 @@ public class AudioService
             _mediaReader = await Task.Run(() => new MediaFoundationReader(url));
             _currentTrackUrl = url;
             _outputDevice!.Init(_mediaReader);
+            _outputDevice.Volume = volume;
             _outputDevice.Play();
         }
         catch (Exception ex)
@@ -91,9 +94,9 @@ public class AudioService
 
     public void SetVolume(float volume)
     {
-        if (_outputDevice == null) return;
+        this.volume = volume * 0.2f;
 
-        _outputDevice.Volume = volume;
+        if (_outputDevice != null) _outputDevice.Volume = this.volume;
     }
 
 
@@ -105,7 +108,6 @@ public class AudioService
             _mediaReader.CurrentTime = TimeSpan.FromSeconds(safeSeconds);
         }
     }
-
 
     private void RecreateOutputDevice()
     {

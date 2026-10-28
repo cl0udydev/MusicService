@@ -25,6 +25,7 @@ public class PlaybackController
     {
         if (isLooped)
         {
+            _audioService.ResetUrl();
             await PlayTrackAsync();
         }
         else
