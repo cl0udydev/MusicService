@@ -7,7 +7,18 @@ namespace MusicService.Applic.PlaybackController;
 
 public class PlaybackController
 {
-    private Track? currentTrack;
+    private Track? currentTrack
+    {
+        get => currentTrack;
+        set
+        {
+            CurrentTrackChanged?.Invoke();
+            currentTrack = value;
+        }
+    }
+
+    public Track? CurrentTrack => currentTrack;
+    public event Action? CurrentTrackChanged;
     private Playlist? playlist;
     public Playlist? Playlist => playlist;
     private int _index;
