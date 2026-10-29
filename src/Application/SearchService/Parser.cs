@@ -26,7 +26,7 @@ public class Parser
 
             HtmlNode? trackDuration = musicSource.GetDurationNode(trackNode);
 
-            string? trackUrl = musicSource.GetLinkNode(trackNode);
+            string? trackUrl = musicSource.GetLink(trackNode);
 
             string? trackImageLink = musicSource.GetImageLink(trackNode);
             
