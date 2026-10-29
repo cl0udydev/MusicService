@@ -3,14 +3,128 @@
         xmlns:vm="using:MusicService.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+        d:DesignWidth="1300"
+        d:DesignHeight="800"
         x:Class="MusicService.Views.MainWindow"
         x:DataType="vm:MainViewModel"
+        CanResize="False"
+        CanMaximize="False"
+        Width="1300"
+        Height="800"
+        ExtendClientAreaToDecorationsHint="True"
+        WindowDecorations="None"
+        Background="#11111B"
         Icon="/Assets/avalonia-logo.ico"
         Title="MusicService">
 
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
+
+    <Window.Styles>
+        <Style Selector="Button.TitleBarButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="#DADAE5" />
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="Width" Value="46" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+
+        <Style Selector="Button.TitleBarButton:pointerover">
+            <Setter Property="Background" Value="#3A3A4D" />
+        </Style>
+
+        <Style Selector="Button.CloseButton:pointerover">
+            <Setter Property="Background" Value="#C42B3A" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="36,*">
+
+        <Border Grid.Row="0"
+                Background="#252535"
+                WindowDecorationProperties.ElementRole="TitleBar">
+
+            <Grid ColumnDefinitions="*,Auto">
+
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            Margin="12,0"
+                            VerticalAlignment="Center">
+
+                    <TextBlock Text="♫"
+                               Foreground="#A5A5FF"
+                               FontSize="19"
+                               VerticalAlignment="Center" />
+
+                    <TextBlock Text="MusicService"
+                               Foreground="#FFFFFF"
+                               FontSize="14"
+                               VerticalAlignment="Center" />
+
+                    <TextBlock Text="cl0udydev"
+                               Foreground="#A0A0B0"
+                               FontSize="13"
+                               Margin="10,0,0,0"
+                               VerticalAlignment="Center" />
+
+                    <TextBlock Text="v.0.1"
+                               Foreground="#777787"
+                               FontSize="12"
+                               Margin="4,0,0,0"
+                               VerticalAlignment="Center" />
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            Spacing="0">
+
+                    <Button Classes="TitleBarButton"
+                            WindowDecorationProperties.ElementRole="User"
+                            Click="OnMinimizeClick"
+                            ToolTip.Tip="Minimize">
+
+                        <TextBlock Text="—"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center" />
+
+                    </Button>
+
+                    <Button Classes="TitleBarButton CloseButton"
+                            WindowDecorationProperties.ElementRole="User"
+                            Click="OnCloseClick"
+                            ToolTip.Tip="Close">
+
+                        <TextBlock Text="×"
+                                   FontSize="22"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center" />
+
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1"
+              Background="#11111B">
+
+            <TextBlock Text="main interface"
+                       Foreground="#777787"
+                       FontSize="18"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+
+        </Grid>
+
+    </Grid>
 
 </Window>
