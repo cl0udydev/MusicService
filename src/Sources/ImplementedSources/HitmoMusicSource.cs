@@ -15,7 +15,7 @@ public class HitmoMusicSource: IMusicSource
 
     public HtmlNode? GetDurationNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//div[contains(@class, 'track__fulltime')]");
 
-    public string? GetLinkNode(HtmlNode trackNode)
+    public string? GetLink(HtmlNode trackNode)
     {
         HtmlNode? linkNode = trackNode.SelectSingleNode(".//a[contains(@class, 'track__download-btn')]");
 

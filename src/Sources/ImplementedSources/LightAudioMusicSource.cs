@@ -14,7 +14,7 @@ public class LightAudioMusicSource: IMusicSource
 
     public HtmlNode? GetDurationNode(HtmlNode trackNode) => trackNode.SelectSingleNode(".//span[contains(@class, 'd')]");
 
-    public string? GetLinkNode(HtmlNode trackNode)
+    public string? GetLink(HtmlNode trackNode)
     {
         HtmlNode? linkNode = trackNode.SelectSingleNode(".//a[contains(@class, 'down')]");
 
