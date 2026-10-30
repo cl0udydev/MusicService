@@ -9,8 +9,6 @@ public class Playlist
 {
     public int Id { get; }
     private readonly List<Track> _tracks;
-
-    [JsonObjectCreationHandling(JsonObjectCreationHandling.Populate)]
     public List<Track> Tracks => _tracks; // kludge that weakens encapsulation
 
 
