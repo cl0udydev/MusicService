@@ -7,16 +7,7 @@ namespace MusicService.Applic.PlaybackController;
 
 public class PlaybackController
 {
-    private Track? currentTrack
-    {
-        get => currentTrack;
-        set
-        {
-            CurrentTrackChanged?.Invoke();
-            currentTrack = value;
-        }
-    }
-
+    private Track? currentTrack;
     public Track? CurrentTrack => currentTrack;
     public event Action? CurrentTrackChanged;
     private Playlist? playlist;
@@ -64,6 +55,7 @@ public class PlaybackController
         playlist = newPlaylist;
         _index = index;
         currentTrack = playlist.Tracks[_index];
+        CurrentTrackChanged?.Invoke();
     }
 
 
@@ -81,6 +73,7 @@ public class PlaybackController
 
         _index = (_index + 1) % playlist.Tracks.Count;
         currentTrack = playlist.Tracks[_index];
+        CurrentTrackChanged?.Invoke();
 
         await PlayTrackAsync();
     }
@@ -92,6 +85,7 @@ public class PlaybackController
 
         _index = (_index - 1 + playlist.Tracks.Count) % playlist.Tracks.Count;
         currentTrack = playlist.Tracks[_index];
+        CurrentTrackChanged?.Invoke();
         
         await PlayTrackAsync();
     }
