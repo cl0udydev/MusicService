@@ -8,13 +8,14 @@
         d:DesignHeight="800"
         x:Class="MusicService.Views.MainWindow"
         x:DataType="vm:MainViewModel"
+        x:CompileBindings="False"
         CanResize="False"
         CanMaximize="False"
         Width="1300"
         Height="800"
         ExtendClientAreaToDecorationsHint="True"
         WindowDecorations="None"
-        Background="#11111B"
+        Background="#101018"
         Icon="/Assets/avalonia-logo.ico"
         Title="MusicService">
 
@@ -23,6 +24,10 @@
     </Design.DataContext>
 
     <Window.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="#F0EFF7" />
+        </Style>
+
         <Style Selector="Button.TitleBarButton">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -40,91 +45,697 @@
 
         <Style Selector="Button.CloseButton:pointerover">
             <Setter Property="Background" Value="#C42B3A" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <Style Selector="Button.PrimaryButton">
+            <Setter Property="Background" Value="#7567D9" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="9" />
+            <Setter Property="Padding" Value="12,10" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button.PrimaryButton:pointerover">
+            <Setter Property="Background" Value="#8779EA" />
+        </Style>
+
+        <Style Selector="Button.SourceButton">
+            <Setter Property="Background" Value="#211F30" />
+            <Setter Property="Foreground" Value="#EEEAFB" />
+            <Setter Property="BorderBrush" Value="#49435F" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="11" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="Width" Value="184" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
+        <Style Selector="Button.SourceButton:pointerover">
+            <Setter Property="Background" Value="#2D2941" />
+            <Setter Property="BorderBrush" Value="#75679E" />
+        </Style>
+
+        <Style Selector="Button.SourceButton:pressed">
+            <Setter Property="Background" Value="#37314F" />
+        </Style>
+
+        <Style Selector="Button.SearchButton">
+            <Setter Property="Background" Value="#7567D9" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="9" />
+            <Setter Property="Width" Value="44" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style Selector="Button.SearchButton:pointerover">
+            <Setter Property="Background" Value="#8779EA" />
+        </Style>
+
+        <Style Selector="TextBox.SearchBox">
+            <Setter Property="Background" Value="#20202D" />
+            <Setter Property="Foreground" Value="#F0EFF7" />
+            <Setter Property="WatermarkForeground" Value="#777789" />
+            <Setter Property="BorderBrush" Value="#353547" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="9" />
+            <Setter Property="Padding" Value="13,9" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
+        <Style Selector="Button.TrackSelectButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
+        <Style Selector="Button.TrackSelectButton:pointerover Border.TrackCard">
+            <Setter Property="Background" Value="#29283A" />
+            <Setter Property="BorderBrush" Value="#514A78" />
+        </Style>
+
+        <Style Selector="Button.TrackOptionsButton">
+            <Setter Property="Background" Value="#242231" />
+            <Setter Property="Foreground" Value="#B8AEDC" />
+            <Setter Property="BorderBrush" Value="#3C374F" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="9" />
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="54" />
+            <Setter Property="FontSize" Value="19" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style Selector="Button.TrackOptionsButton:pointerover">
+            <Setter Property="Background" Value="#39334F" />
+            <Setter Property="BorderBrush" Value="#75679E" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <Style Selector="Button.PlayerControlButton">
+            <Setter Property="Background" Value="#292738" />
+            <Setter Property="Foreground" Value="#D9D2F1" />
+            <Setter Property="BorderBrush" Value="#454057" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="21" />
+            <Setter Property="Width" Value="42" />
+            <Setter Property="Height" Value="42" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="19" />
+            <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button.PlayerControlButton:pointerover">
+            <Setter Property="Background" Value="#3B3552" />
+            <Setter Property="BorderBrush" Value="#8778BC" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <Style Selector="Button.PlayerControlButton:pressed">
+            <Setter Property="Background" Value="#4B4267" />
+            <Setter Property="BorderBrush" Value="#A99AE2" />
+        </Style>
+
+        <Style Selector="ToggleButton.PlayerModeButton">
+            <Setter Property="Background" Value="#242332" />
+            <Setter Property="Foreground" Value="#AFA9C7" />
+            <Setter Property="BorderBrush" Value="#3C394D" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="21" />
+            <Setter Property="Width" Value="42" />
+            <Setter Property="Height" Value="42" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="ToggleButton.PlayerModeButton:pointerover">
+            <Setter Property="Background" Value="#373149" />
+            <Setter Property="BorderBrush" Value="#74669F" />
+            <Setter Property="Foreground" Value="#E8E1FF" />
+        </Style>
+
+        <Style Selector="ToggleButton.PlayerModeButton:checked">
+            <Setter Property="Background" Value="#3D345B" />
+            <Setter Property="BorderBrush" Value="#9886D8" />
+            <Setter Property="Foreground" Value="#D9CDFF" />
+        </Style>
+
+        <Style Selector="Button.VolumeButton">
+            <Setter Property="Background" Value="#252333" />
+            <Setter Property="Foreground" Value="#C9C0E8" />
+            <Setter Property="BorderBrush" Value="#403B53" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="17" />
+            <Setter Property="Width" Value="34" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button.VolumeButton:pointerover">
+            <Setter Property="Background" Value="#38324F" />
+            <Setter Property="BorderBrush" Value="#8272B8" />
+        </Style>
+
+        <Style Selector="Button.PlayButton">
+            <Setter Property="Background" Value="#8D7BD1" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="BorderBrush" Value="#B5A8EE" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="24" />
+            <Setter Property="Width" Value="48" />
+            <Setter Property="Height" Value="48" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button.PlayButton:pointerover">
+            <Setter Property="Background" Value="#A091E5" />
+            <Setter Property="BorderBrush" Value="#D0C5FF" />
+        </Style>
+
+        <Style Selector="Button.PlayButton:pressed">
+            <Setter Property="Background" Value="#7462B5" />
+        </Style>
+
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style Selector="ListBoxItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#C8C6D5" />
+            <Setter Property="Padding" Value="10,11" />
+            <Setter Property="Margin" Value="0,2" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+
+        <Style Selector="ListBoxItem:pointerover">
+            <Setter Property="Background" Value="#242432" />
+        </Style>
+
+        <Style Selector="ListBoxItem:selected">
+            <Setter Property="Background" Value="#302D49" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <Style Selector="Slider.PlayerSlider">
+            <Setter Property="Background" Value="#39364A" />
+            <Setter Property="Foreground" Value="#A18FE8" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="MinHeight" Value="24" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Slider.PlayerSlider /template/ Track">
+            <Setter Property="Height" Value="5" />
+        </Style>
+
+        <Style Selector="Slider.PlayerSlider /template/ RepeatButton#PART_DecreaseButton">
+            <Setter Property="Background" Value="#A18FE8" />
+        </Style>
+
+        <Style Selector="Slider.PlayerSlider /template/ RepeatButton#PART_IncreaseButton">
+            <Setter Property="Background" Value="#39364A" />
+        </Style>
+
+        <Style Selector="Slider.PlayerSlider /template/ Thumb#thumb">
+            <Setter Property="Width" Value="14" />
+            <Setter Property="Height" Value="14" />
+            <Setter Property="Background" Value="#D9D0FF" />
+            <Setter Property="BorderBrush" Value="#8D7BD1" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+
+        <Style Selector="Slider.PlayerSlider:pointerover /template/ RepeatButton#PART_DecreaseButton">
+            <Setter Property="Background" Value="#B4A5F4" />
+        </Style>
+
+        <Style Selector="Slider.PlayerSlider:pointerover /template/ Thumb#thumb">
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="BorderBrush" Value="#B4A5F4" />
         </Style>
     </Window.Styles>
 
     <Grid RowDefinitions="36,*">
-
         <Border Grid.Row="0"
                 Background="#252535"
                 WindowDecorationProperties.ElementRole="TitleBar">
-
             <Grid ColumnDefinitions="*,Auto">
-
                 <StackPanel Grid.Column="0"
                             Orientation="Horizontal"
                             Spacing="8"
                             Margin="12,0"
                             VerticalAlignment="Center">
-
                     <TextBlock Text="♫"
                                Foreground="#A5A5FF"
                                FontSize="19"
                                VerticalAlignment="Center" />
-
                     <TextBlock Text="MusicService"
                                Foreground="#FFFFFF"
                                FontSize="14"
                                VerticalAlignment="Center" />
-
                     <TextBlock Text="cl0udydev"
                                Foreground="#A0A0B0"
                                FontSize="13"
                                Margin="10,0,0,0"
                                VerticalAlignment="Center" />
-
                     <TextBlock Text="v.0.1"
                                Foreground="#777787"
                                FontSize="12"
                                Margin="4,0,0,0"
                                VerticalAlignment="Center" />
-
                 </StackPanel>
 
                 <StackPanel Grid.Column="1"
                             Orientation="Horizontal"
                             Spacing="0">
-
                     <Button Classes="TitleBarButton"
                             WindowDecorationProperties.ElementRole="User"
                             Click="OnMinimizeClick"
                             ToolTip.Tip="Minimize">
-
                         <TextBlock Text="—"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center" />
-
                     </Button>
-
                     <Button Classes="TitleBarButton CloseButton"
                             WindowDecorationProperties.ElementRole="User"
                             Click="OnCloseClick"
                             ToolTip.Tip="Close">
-
                         <TextBlock Text="×"
                                    FontSize="22"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center" />
-
                     </Button>
-
                 </StackPanel>
-
             </Grid>
         </Border>
 
-        <Grid Grid.Row="1"
-              Background="#11111B">
+        <Grid Grid.Row="1" RowDefinitions="*,116">
+            <Grid Grid.Row="0" ColumnDefinitions="224,*,224">
+                <Border Grid.Column="0"
+                        Background="#171720"
+                        BorderBrush="#2B2B39"
+                        BorderThickness="0,0,1,0"
+                        Padding="16,18">
+                    <Grid RowDefinitions="Auto,Auto,*">
+                        <TextBlock Grid.Row="0"
+                                   Text="YOUR LIBRARY"
+                                   Foreground="#777789"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   Margin="4,0,0,14" />
 
-            <TextBlock Text="main interface"
-                       Foreground="#777787"
-                       FontSize="18"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                        <Button Grid.Row="1"
+                                Classes="PrimaryButton"
+                                Command="{Binding CreatePlaylistCommand}"
+                                HorizontalAlignment="Stretch"
+                                Margin="0,0,0,18">
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="9"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="＋" FontSize="18" VerticalAlignment="Center" />
+                                <TextBlock Text="Create playlist" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
 
+                        <ListBox Grid.Row="2"
+                                 ItemsSource="{Binding Playlists}"
+                                 SelectedItem="{Binding SelectedPlaylist, Mode=TwoWay}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="11">
+                                        <Border Width="30"
+                                                Height="30"
+                                                CornerRadius="7"
+                                                Background="#29283A"
+                                                VerticalAlignment="Center">
+                                            <TextBlock Text="♫"
+                                                       Foreground="#A99EFF"
+                                                       FontSize="15"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+                                        <StackPanel VerticalAlignment="Center" Spacing="1">
+                                            <TextBlock Text="Playlist"
+                                                       FontSize="13"
+                                                       FontWeight="Medium" />
+                                            <TextBlock Text="{Binding Id, StringFormat='#{0}'}"
+                                                       Foreground="#858496"
+                                                       FontSize="11" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Column="1" RowDefinitions="66,*" Background="#101018">
+                    <Grid Grid.Row="0"
+                          ColumnDefinitions="Auto,*,44"
+                          Margin="20,12,20,10"
+                          ColumnSpacing="10">
+                        <Button Grid.Column="0"
+                                Classes="SourceButton"
+                                ToolTip.Tip="Choose music source">
+                            <Button.Flyout>
+                                <MenuFlyout Placement="BottomEdgeAlignedLeft"
+                                            ItemsSource="{Binding MusicSources}">
+                                    <MenuFlyout.ItemContainerTheme>
+                                        <ControlTheme TargetType="MenuItem"
+                                                      BasedOn="{StaticResource {x:Type MenuItem}}">
+                                            <Setter Property="Header" Value="{Binding DisplayName}" />
+                                            <Setter Property="Command" Value="{Binding SelectCommand}" />
+                                        </ControlTheme>
+                                    </MenuFlyout.ItemContainerTheme>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                            <Grid ColumnDefinitions="32,*,Auto" ColumnSpacing="9">
+                                <Border Grid.Column="0"
+                                        Width="30"
+                                        Height="30"
+                                        CornerRadius="8"
+                                        Background="#38324F"
+                                        ClipToBounds="True">
+                                    <Image Source="{Binding SelectedSourceIcon}"
+                                           Stretch="Uniform"
+                                           Margin="4" />
+                                </Border>
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding SelectedSourceName}"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           VerticalAlignment="Center"
+                                           TextTrimming="CharacterEllipsis" />
+                                <TextBlock Grid.Column="2"
+                                           Text="⌄"
+                                           Foreground="#A99BCF"
+                                           FontSize="16"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,2,2" />
+                            </Grid>
+                        </Button>
+
+                        <TextBox Grid.Column="1"
+                                 Classes="SearchBox"
+                                 VerticalContentAlignment="Center"
+                                 Watermark="Search tracks"
+                                 Text="{Binding SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip.Tip="Enter a track name or artist" />
+
+                        <Button Grid.Column="2"
+                                Classes="SearchButton"
+                                Command="{Binding SearchTracksCommand}"
+                                ToolTip.Tip="Search">
+                            <TextBlock Text="⌕"
+                                       FontSize="27"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Row="1" RowDefinitions="Auto,*" Margin="20,8,20,16">
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,14">
+                            <StackPanel Grid.Column="0" Spacing="3">
+                                <TextBlock Text="{Binding CurrentListTitle}"
+                                           FontSize="22"
+                                           FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding DisplayedTracks.Count, StringFormat='{}{0} tracks'}"
+                                           Foreground="#858496"
+                                           FontSize="12" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1"
+                                       Text="TRACKS"
+                                       Foreground="#777789"
+                                       FontSize="10"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding DisplayedTracks}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="*,42" Margin="0,0,0,8">
+                                            <Button Grid.Column="0"
+                                                    Classes="TrackSelectButton"
+                                                    Command="{Binding $parent[Window].DataContext.PlayTrackCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <Border Classes="TrackCard"
+                                                        Background="#1B1B28"
+                                                        BorderBrush="#292938"
+                                                        BorderThickness="1"
+                                                        CornerRadius="10"
+                                                        Padding="10">
+                                                    <Grid ColumnDefinitions="48,*,Auto" ColumnSpacing="12">
+                                                        <Border Grid.Column="0"
+                                                                Width="48"
+                                                                Height="48"
+                                                                CornerRadius="7"
+                                                                ClipToBounds="True"
+                                                                Background="#302D49">
+                                                            <Grid>
+                                                                <TextBlock Text="♫"
+                                                                           Foreground="#A99EFF"
+                                                                           FontSize="22"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center" />
+                                                                <Image Source="{Binding CoverImage}"
+                                                                       Stretch="UniformToFill" />
+                                                            </Grid>
+                                                        </Border>
+
+                                                        <StackPanel Grid.Column="1"
+                                                                    VerticalAlignment="Center"
+                                                                    Spacing="4">
+                                                            <TextBlock Text="{Binding Name}"
+                                                                       FontSize="13"
+                                                                       FontWeight="SemiBold"
+                                                                       TextTrimming="CharacterEllipsis" />
+                                                            <TextBlock Text="{Binding Author}"
+                                                                       Foreground="#9190A1"
+                                                                       FontSize="11"
+                                                                       TextTrimming="CharacterEllipsis" />
+                                                        </StackPanel>
+
+                                                        <TextBlock Grid.Column="2"
+                                                                   Text="{Binding Duration}"
+                                                                   Foreground="#858496"
+                                                                   FontSize="11"
+                                                                   VerticalAlignment="Center"
+                                                                   Margin="8,0,5,0" />
+                                                    </Grid>
+                                                </Border>
+                                            </Button>
+
+                                            <Button Grid.Column="1"
+                                                    Classes="TrackOptionsButton"
+                                                    Content="⋯"
+                                                    ToolTip.Tip="Track actions"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Right">
+                                                <Button.Flyout>
+                                                    <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                                        <MenuItem Header="Play"
+                                                                  Command="{Binding $parent[Window].DataContext.PlayTrackCommand}"
+                                                                  CommandParameter="{Binding}" />
+                                                        <MenuItem Header="Add to playlist..."
+                                                                  Command="{Binding $parent[Window].DataContext.OpenAddToPlaylistCommand}"
+                                                                  CommandParameter="{Binding}" />
+                                                    </MenuFlyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+
+                <Border Grid.Column="2"
+                        Background="#171720"
+                        BorderBrush="#2B2B39"
+                        BorderThickness="1,0,0,0"
+                        Padding="19,19,17,14">
+                    <Grid RowDefinitions="Auto,*">
+                        <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,15">
+                            <TextBlock Text="Lyrics"
+                                       FontSize="19"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Text="{Binding CurrentTrackName}"
+                                       Foreground="#858496"
+                                       FontSize="11"
+                                       TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <TextBlock Text="{Binding CurrentLyrics}"
+                                       Foreground="#C4C2D0"
+                                       FontSize="13"
+                                       LineHeight="23"
+                                       TextWrapping="Wrap" />
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Background="#191923"
+                    BorderBrush="#30303F"
+                    BorderThickness="0,1,0,0"
+                    Padding="0,13">
+                <Grid ColumnDefinitions="224,*,224">
+                    <Grid Grid.Column="0" ColumnDefinitions="62,*" ColumnSpacing="12" Margin="18,0" VerticalAlignment="Center">
+                        <Border Grid.Column="0"
+                                Width="62"
+                                Height="62"
+                                CornerRadius="9"
+                                Background="#302D49"
+                                ClipToBounds="True">
+                            <Grid>
+                                <TextBlock Text="♫"
+                                           Foreground="#A99EFF"
+                                           FontSize="27"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                                <Image Source="{Binding CurrentTrackCover}"
+                                       Stretch="UniformToFill" />
+                            </Grid>
+                        </Border>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="5">
+                            <TextBlock Text="{Binding CurrentTrackName}"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding CurrentTrackAuthor}"
+                                       Foreground="#8F8EA0"
+                                       FontSize="11"
+                                       TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="1"
+                          RowDefinitions="Auto,Auto"
+                          Margin="18,0"
+                          VerticalAlignment="Center"
+                          RowSpacing="7">
+                        <Grid Grid.Row="0"
+                              ColumnDefinitions="Auto,*,Auto"
+                              ColumnSpacing="9">
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding CurrentPositionText}"
+                                       Foreground="#8F8EA0"
+                                       FontSize="10"
+                                       VerticalAlignment="Center" />
+                            <Slider Grid.Column="1"
+                                    Classes="PlayerSlider"
+                                    Minimum="0"
+                                    Maximum="{Binding DurationSeconds}"
+                                    Value="{Binding PositionSeconds, Mode=TwoWay}"
+                                    SmallChange="1"
+                                    LargeChange="5" />
+                            <TextBlock Grid.Column="2"
+                                       Text="{Binding Duration}"
+                                       Foreground="#8F8EA0"
+                                       FontSize="10"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+
+                        <Grid Grid.Row="1"
+                              ColumnDefinitions="42,42,50,42,42"
+                              ColumnSpacing="12"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                            <ToggleButton Grid.Column="0"
+                                          Classes="PlayerModeButton"
+                                          Content="⤨"
+                                          IsChecked="{Binding IsShuffleEnabled, Mode=TwoWay}"
+                                          Command="{Binding ToggleShuffleCommand}"
+                                          ToolTip.Tip="Shuffle" />
+                            <Button Grid.Column="1"
+                                    Classes="PlayerControlButton"
+                                    Content="⏮"
+                                    Command="{Binding PreviousTrackCommand}"
+                                    ToolTip.Tip="Previous track" />
+                            <Button Grid.Column="2"
+                                    Classes="PlayButton"
+                                    Content="{Binding PlayPauseGlyph}"
+                                    Command="{Binding TogglePlayPauseCommand}"
+                                    ToolTip.Tip="Play / Pause"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center" />
+                            <Button Grid.Column="3"
+                                    Classes="PlayerControlButton"
+                                    Content="⏭"
+                                    Command="{Binding NextTrackCommand}"
+                                    ToolTip.Tip="Next track" />
+                            <ToggleButton Grid.Column="4"
+                                          Classes="PlayerModeButton"
+                                          Content="↻"
+                                          IsChecked="{Binding IsRepeatEnabled, Mode=TwoWay}"
+                                          Command="{Binding ToggleRepeatCommand}"
+                                          ToolTip.Tip="Repeat" />
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Column="2"
+                          ColumnDefinitions="36,*"
+                          ColumnSpacing="10"
+                          Margin="18,0"
+                          VerticalAlignment="Center">
+                        <Button Grid.Column="0"
+                                Classes="VolumeButton"
+                                Command="{Binding ToggleMuteCommand}"
+                                ToolTip.Tip="Mute / Unmute">
+                            <Grid Width="22" Height="22">
+                                <Path Data="M3,9 L3,15 L7,15 L12,19 L12,5 L7,9 Z"
+                                      Fill="#C9C0E8" />
+                                <Path Data="M15,9 C17,11 17,13 15,15"
+                                      Stroke="#C9C0E8"
+                                      StrokeThickness="1.7"
+                                      StrokeLineCap="Round"
+                                      Fill="Transparent" />
+                                <Path Data="M18,6 C22,10 22,14 18,18"
+                                      Stroke="#C9C0E8"
+                                      StrokeThickness="1.7"
+                                      StrokeLineCap="Round"
+                                      Fill="Transparent" />
+                            </Grid>
+                        </Button>
+                        <Slider Grid.Column="1"
+                                Classes="PlayerSlider"
+                                Minimum="0"
+                                Maximum="1"
+                                Value="{Binding Volume, Mode=TwoWay}"
+                                SmallChange="0.01"
+                                LargeChange="0.1"
+                                VerticalAlignment="Center" />
+                    </Grid>
+                </Grid>
+            </Border>
         </Grid>
-
     </Grid>
-
 </Window>
