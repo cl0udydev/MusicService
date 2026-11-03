@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using MusicService.Infrastructure;
 using MusicService.Sources;
 
@@ -26,7 +27,7 @@ public class SearchService
     {
         var source = _musicSource;
         var link = source.FormingLink(userInput);
-        var document = await _httpService.LoadHtml(link, NetworkErrorType.SearchError);
+        var document = await _httpService.LoadHtmlAsync(link, NetworkErrorType.SearchError);
 
         if (document is null)
             return new SearchResult(SearchResultType.Failed);
@@ -36,11 +37,22 @@ public class SearchService
 
     public async Task<SearchResult> SearchLyrics(string lyricsUrl)
     {
-        var document = await _httpService.LoadHtml(lyricsUrl, NetworkErrorType.LyricsError);
+        var document = await _httpService.LoadHtmlAsync(lyricsUrl, NetworkErrorType.LyricsError);
 
         if (document is null)
             return new SearchResult(SearchResultType.Failed);
 
         return _parser.ParseLyrics(document);
+    }
+
+
+    public async Task<SearchResult> SearchCover(string coverUrl)
+    {
+        var cover = await _httpService.DownloadBitmapAsync(coverUrl);
+
+        if (cover is null)
+            return new SearchResult(SearchResultType.Failed);
+
+        return new SearchResult(SearchResultType.Successfully, cover: cover);
     }
 }
