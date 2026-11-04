@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using MusicService.Audio;
 using MusicService.Domain;
+using NAudio.Wave;
 
 namespace MusicService.Applic.PlaybackController;
 
@@ -10,16 +11,26 @@ public class PlaybackController
     private Track? currentTrack;
     public Track? CurrentTrack => currentTrack;
     public event Action? CurrentTrackChanged;
+    
     private Playlist? playlist;
     public Playlist? Playlist => playlist;
     private int _index;
+
+    public PlaybackState PlaybackState;
     private AudioService _audioService;
+
     private bool isLooped;
+    public bool IsLooped => isLooped;
 
     public PlaybackController(AudioService audioService)
     {
         _audioService = audioService;
         _audioService.TrackFinished += OnTrackFinished;
+
+        _audioService.PlaybackStateChanged += (state) =>
+        {
+            PlaybackState = state;
+        };
     }
 
 
