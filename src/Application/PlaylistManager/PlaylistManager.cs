@@ -95,6 +95,17 @@ public class PlaylistManager
     }
 
 
+    public async Task ChangePlaylistName(int id, string newName)
+    {
+        if (!playlists.ContainsKey(id))
+            throw new KeyNotFoundException($"Playlist with ID {id} was not found.");
+        
+        playlists[id].ChangeName(newName);
+
+        await AppDataService.Playlists.Save(playlists);
+    }
+
+
     private async Task<int> TakeIndex()
     {
         if (availableIds.Count == 0)
