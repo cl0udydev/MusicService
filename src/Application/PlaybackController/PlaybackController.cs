@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MusicService.Audio;
 using MusicService.Domain;
@@ -11,7 +12,7 @@ public class PlaybackController
     private Track? currentTrack;
     public Track? CurrentTrack => currentTrack;
     public event Action? CurrentTrackChanged;
-    
+
     private Playlist? playlist;
     public Playlist? Playlist => playlist;
     private int _index;
@@ -22,6 +23,22 @@ public class PlaybackController
     private bool isLooped;
     public bool IsLooped => isLooped;
 
+    private bool isShuffle;
+    public bool IsShuffle => isShuffle;
+    private List<Track>? shuffledTracks;
+
+    public void ChangeLooped() => isLooped = !isLooped;
+    public void ChangeShuffle()
+    {
+        isShuffle = !isShuffle;
+
+        if (Playlist != null)
+        {
+            shuffledTracks = ShuffleIntermediateTracks(Playlist.Tracks);
+        }
+    }
+
+
     public PlaybackController(AudioService audioService)
     {
         _audioService = audioService;
@@ -30,7 +47,7 @@ public class PlaybackController
         _audioService.PlaybackStateChanged += (state) =>
         {
             PlaybackState = state;
-        };
+        }; 
     }
 
 
@@ -40,6 +57,10 @@ public class PlaybackController
         {
             _audioService.ResetUrl();
             await PlayTrackAsync();
+        }
+        else if (isShuffle)
+        {
+            await PlayNextShuffledTrackAsync();
         }
         else
         {
@@ -52,8 +73,9 @@ public class PlaybackController
     {
         if (playlist != null)
         {
-            if (playlist.Id == newPlaylist.Id) return;
+            if (playlist.Id == newPlaylist.Id && _index == index) return;
         }
+
 
         if (newPlaylist.Tracks.Count == 0) 
             throw new ArgumentException($"New playlist must contains at least one track", nameof(newPlaylist));
@@ -63,9 +85,13 @@ public class PlaybackController
             throw new ArgumentOutOfRangeException(nameof(index), $"New playlist index out of range");
 
         StopTrack();
+
         playlist = newPlaylist;
         _index = index;
         currentTrack = playlist.Tracks[_index];
+
+        if (isShuffle) shuffledTracks = ShuffleIntermediateTracks(playlist.Tracks);
+
         CurrentTrackChanged?.Invoke();
     }
 
@@ -102,7 +128,23 @@ public class PlaybackController
     }
 
 
-    public void ChangeLooped() => isLooped = !isLooped;
+    private async Task PlayNextShuffledTrackAsync()
+    {
+        if (shuffledTracks!.Count == 0)
+        {
+            shuffledTracks = ShuffleIntermediateTracks(playlist!.Tracks);
+        }
+
+        var track = shuffledTracks![0];
+        shuffledTracks.RemoveAt(0);
+
+        _index = playlist!.Tracks.IndexOf(track);
+        currentTrack = playlist.Tracks[_index];
+
+        CurrentTrackChanged?.Invoke();
+
+        await PlayTrackAsync();
+    }
 
 
     public void StopTrack()
@@ -116,4 +158,18 @@ public class PlaybackController
         _audioService.Pause();
     }
 
+
+    private List<Track> ShuffleIntermediateTracks(List<Track> tracks)
+    {
+        var tempTracks = new List<Track>(tracks);
+
+        for (int i = tempTracks.Count - 1; i > 0; i--)
+        {
+            int j = Random.Shared.Next(i + 1);
+
+            (tempTracks[i], tempTracks[j]) = (tempTracks[j], tempTracks[i]);
+        }
+        
+        return tempTracks;
+    }
 }
