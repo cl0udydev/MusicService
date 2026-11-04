@@ -8,6 +8,7 @@ namespace MusicService.Domain;
 public class Playlist
 {
     public int Id { get; }
+    public string Name { get; private set; }
     private readonly List<Track> _tracks;
     public List<Track> Tracks => _tracks; // kludge that weakens encapsulation
 
@@ -15,6 +16,7 @@ public class Playlist
     public Playlist(int id)
     {
         Id = id;
+        Name = $"playlist #{Id}";
         _tracks = new();
     }
 
@@ -47,5 +49,11 @@ public class Playlist
         {
             AddTrack(track);    
         }
+    }
+
+
+    public void ChangeName(string name)
+    {
+        Name = name;
     }
 }
