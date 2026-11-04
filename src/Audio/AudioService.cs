@@ -13,6 +13,7 @@ public class AudioService
     private string? _currentTrackUrl;
     private PlaybackStopReason? _requestedStopReason;
     public event Action? TrackFinished;
+    public event Action<PlaybackState>? PlaybackStateChanged;
     private float volume;
     public long CurrentPosition => _mediaReader?.Position ?? 0;
     public double TotalSeconds => _mediaReader?.TotalTime.TotalSeconds ?? 0;
@@ -27,6 +28,7 @@ public class AudioService
         if (args.Exception != null)
         {
             NetworkErrorsSystem.EmitNetworkError(args.Exception, NetworkErrorType.PlaybackError);
+            PlaybackStateChanged?.Invoke(PlaybackState.Stopped);
             return;
         }
 
@@ -37,6 +39,7 @@ public class AudioService
         }
 
         TrackFinished?.Invoke();
+        PlaybackStateChanged?.Invoke(PlaybackState.Stopped);
     }
 
 
@@ -60,6 +63,7 @@ public class AudioService
             _outputDevice!.Init(_mediaReader);
             _outputDevice.Volume = volume;
             _outputDevice.Play();
+            PlaybackStateChanged?.Invoke(PlaybackState.Playing);
         }
         catch (Exception ex)
         {
@@ -88,6 +92,7 @@ public class AudioService
         if (_outputDevice.PlaybackState == PlaybackState.Playing)
         {
             _outputDevice.Pause();
+            PlaybackStateChanged?.Invoke(PlaybackState.Paused);
         }
     }
 
