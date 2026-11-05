@@ -17,7 +17,8 @@ public class PlaybackController
     public Playlist? Playlist => playlist;
     private int _index;
 
-    public PlaybackState PlaybackState;
+    public PlaybackState PlaybackState { get; private set; }
+    public event Action<PlaybackState> PlaybackStateChanged;
     private AudioService _audioService;
 
     private bool isLooped;
@@ -27,13 +28,21 @@ public class PlaybackController
     public bool IsShuffle => isShuffle;
     private List<Track>? shuffledTracks;
 
-    public void ChangeLooped() => isLooped = !isLooped;
-    public void ChangeShuffle()
-    {
-        isShuffle = !isShuffle;
 
+    public void ChangeLooped()
+    {
         if (Playlist != null)
         {
+            isLooped = !isLooped;
+        }
+    }
+
+    
+    public void ChangeShuffle()
+    {
+        if (Playlist != null)
+        {
+            isShuffle = !isShuffle;
             shuffledTracks = ShuffleIntermediateTracks(Playlist.Tracks);
         }
     }
@@ -47,6 +56,7 @@ public class PlaybackController
         _audioService.PlaybackStateChanged += (state) =>
         {
             PlaybackState = state;
+            PlaybackStateChanged?.Invoke(PlaybackState);
         }; 
     }
 

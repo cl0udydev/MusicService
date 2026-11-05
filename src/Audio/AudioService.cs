@@ -14,7 +14,7 @@ public class AudioService
     private PlaybackStopReason? _requestedStopReason;
     public event Action? TrackFinished;
     public event Action<PlaybackState>? PlaybackStateChanged;
-    private float volume;
+    private float volume = 0.5f * 0.4f;
     public long CurrentPosition => _mediaReader?.Position ?? 0;
     public double TotalSeconds => _mediaReader?.TotalTime.TotalSeconds ?? 0;
     public double CurrentSeconds => _mediaReader?.CurrentTime.TotalSeconds ?? 0;
@@ -27,8 +27,9 @@ public class AudioService
         if (!ReferenceEquals(sender, _outputDevice)) return;
         if (args.Exception != null)
         {
-            NetworkErrorsSystem.EmitNetworkError(args.Exception, NetworkErrorType.PlaybackError);
+            DisposeAll();
             PlaybackStateChanged?.Invoke(PlaybackState.Stopped);
+            NetworkErrorsSystem.EmitNetworkError(args.Exception, NetworkErrorType.PlaybackError);
             return;
         }
 
@@ -38,8 +39,8 @@ public class AudioService
             return;
         }
 
-        TrackFinished?.Invoke();
         PlaybackStateChanged?.Invoke(PlaybackState.Stopped);
+        TrackFinished?.Invoke();
     }
 
 
@@ -48,7 +49,15 @@ public class AudioService
         if (url == _currentTrackUrl && _mediaReader != null)
         {
             if (_outputDevice != null && _outputDevice.PlaybackState != PlaybackState.Playing)
+            {
+                if (_mediaReader.CurrentTime >= _mediaReader.TotalTime)
+                {
+                    _mediaReader.CurrentTime = TimeSpan.Zero;
+                }
+
                 _outputDevice.Play();
+                PlaybackStateChanged?.Invoke(PlaybackState.Playing);
+            }
 
             return;
         }
@@ -68,6 +77,7 @@ public class AudioService
         catch (Exception ex)
         {
             DisposeAll();
+            PlaybackStateChanged?.Invoke(PlaybackState.Stopped);
             NetworkErrorsSystem.EmitNetworkError(ex, NetworkErrorType.LoadingError);
         }
     }
@@ -83,6 +93,8 @@ public class AudioService
         _mediaReader?.Dispose();
         _mediaReader = null;
         _currentTrackUrl = null;
+
+        PlaybackStateChanged?.Invoke(PlaybackState.Stopped);
     }
 
 
@@ -99,7 +111,7 @@ public class AudioService
 
     public void SetVolume(float volume)
     {
-        this.volume = volume * 0.2f;
+        this.volume = volume * 0.4f;
 
         if (_outputDevice != null) _outputDevice.Volume = this.volume;
     }
