@@ -9,7 +9,12 @@ public class Playlist
 {
     public int Id { get; }
     public string Name { get; private set; }
-    private readonly List<Track> _tracks;
+    
+    [JsonInclude]
+    [JsonPropertyName("Tracks")]
+    private List<Track> _tracks;
+
+    [JsonIgnore]
     public List<Track> Tracks => _tracks; // kludge that weakens encapsulation
 
 

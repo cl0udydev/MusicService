@@ -1,17 +1,19 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace MusicService.Domain;
 
 // dataclass for storing tracks information 
 public record class Track
 {
-    public string Link { get; }
-    public string Name { get; }
-    public string Author { get; }
-    public TimeSpan Duration { get; }
-    public string ImageLink { get; }
-    public string LyricsLink { get; }
+    public string Link { get; init; }
+    public string Name { get; init; }
+    public string Author { get; init; }
+    public TimeSpan Duration { get; init; }
+    public string ImageLink { get; init; }
+    public string LyricsLink { get; init; }
 
+    [JsonConstructor]
     public Track(string link, string name, string author, TimeSpan duration, string imageLink, string lyricsLink)
     {
         Link = link;
