@@ -9,11 +9,12 @@ namespace MusicService.Applic.SearchService;
 public readonly struct SearchResult
 {
     public SearchResultType Type { get; }
+    public string Message { get; }
     public List<Track>? Tracks { get; }
     public string? Lyrics { get; }
     public Bitmap? Cover { get; }
 
-    public SearchResult(SearchResultType type, List<Track> tracks)
+    public SearchResult(SearchResultType type, List<Track> tracks, string message)
     {
         if (type != SearchResultType.Successfully)
         {
@@ -21,9 +22,10 @@ public readonly struct SearchResult
         }
         Type = type;
         Tracks = tracks;
+        Message = message;
     }
 
-    public SearchResult(SearchResultType type, string lyrics)
+    public SearchResult(SearchResultType type, string lyrics, string message)
     {
         if (type != SearchResultType.Successfully)
         {
@@ -31,9 +33,10 @@ public readonly struct SearchResult
         }
         Type = type;
         Lyrics = lyrics;  
+        Message = message;
     }
 
-    public SearchResult(SearchResultType type, Bitmap cover)
+    public SearchResult(SearchResultType type, Bitmap cover, string message)
     {
         if (type != SearchResultType.Successfully)
         {
@@ -41,15 +44,17 @@ public readonly struct SearchResult
         }
         Type = type;
         Cover = cover;
+        Message = message;
     }
 
-    public SearchResult(SearchResultType type)
+    public SearchResult(SearchResultType type, string message)
     {
         if (type == SearchResultType.Successfully)
         {
             throw new ArgumentException("Incoming SearchResultType must be Failed", nameof(type));
         }
         Type = type;
+        Message = message;
     }
 }
 
