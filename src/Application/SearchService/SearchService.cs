@@ -30,7 +30,7 @@ public class SearchService
         var document = await _httpService.LoadHtmlAsync(link, NetworkErrorType.SearchError);
 
         if (document is null)
-            return new SearchResult(SearchResultType.Failed);
+            return new SearchResult(SearchResultType.Failed, "track page not found");
 
         return _parser.ParseSource(document, source);
     }
@@ -40,7 +40,7 @@ public class SearchService
         var document = await _httpService.LoadHtmlAsync(lyricsUrl, NetworkErrorType.LyricsError);
 
         if (document is null)
-            return new SearchResult(SearchResultType.Failed);
+            return new SearchResult(SearchResultType.Failed, "lyrics page not found");
 
         return _parser.ParseLyrics(document);
     }
@@ -51,8 +51,8 @@ public class SearchService
         var cover = await _httpService.DownloadBitmapAsync(coverUrl);
 
         if (cover is null)
-            return new SearchResult(SearchResultType.Failed);
+            return new SearchResult(SearchResultType.Failed, "cover page not found");
 
-        return new SearchResult(SearchResultType.Successfully, cover: cover);
+        return new SearchResult(SearchResultType.Successfully, cover, "successfully");
     }
 }

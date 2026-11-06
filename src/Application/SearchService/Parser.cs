@@ -14,7 +14,7 @@ public class Parser
     {
         HtmlNodeCollection? trackNodes = document.DocumentNode.SelectNodes(musicSource.GeneralNodeArgs);
 
-        if (trackNodes == null) return new SearchResult(SearchResultType.Failed);
+        if (trackNodes == null) return new SearchResult(SearchResultType.Failed, "main nodes of the track were not found");
 
         List<Track> tracks = new();
 
@@ -56,42 +56,50 @@ public class Parser
 
         if (tracks.Count == 0)
         {
-            return new SearchResult(SearchResultType.Failed);
+            return new SearchResult(SearchResultType.Failed, "no tracks found");
         }
 
-        return new SearchResult(SearchResultType.Successfully, tracks);
+        return new SearchResult(SearchResultType.Successfully, tracks, "successfully");
     }
 
     public SearchResult ParseLyrics(HtmlDocument document)
     {
         HtmlNode? errorNode = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'render_404')]");
 
-        if (errorNode != null) return new SearchResult(SearchResultType.Failed);
+        if (errorNode != null) return new SearchResult(SearchResultType.Failed, "no lirycs was found at this link");
 
-        HtmlNode? lyricsNode = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'Lyrics__Container-sc-12f9e8d3-1 jhVhlB')]");
+        HtmlNodeCollection? lyricsNode = document.DocumentNode.SelectNodes("//div[contains(@class, 'Lyrics__Container-sc-12f9e8d3-1 jhVhlB')]");
 
-        if (lyricsNode == null) return new SearchResult(SearchResultType.Failed);
+        if (lyricsNode == null) return new SearchResult(SearchResultType.Failed, "no lyrics nodes were found");
 
         StringBuilder lyrics = new StringBuilder();
-
-        foreach (var child in lyricsNode.ChildNodes)
+        
+        foreach (var node in lyricsNode)
         {
-            if (child.NodeType == HtmlNodeType.Text)
+            foreach (var child in node.ChildNodes)
             {
-                lyrics.Append(child.InnerText);
-            }
-            else if (child.Name == "br")
-            {
-                lyrics.AppendLine();
-            }
-            else 
-            {
-                lyrics.Append(child.InnerText);
+                if (child.NodeType == HtmlNodeType.Text)
+                {
+                    lyrics.Append(child.InnerText);
+                }
+                else if (child.Name == "br")
+                {
+                    lyrics.AppendLine();
+                }
+                else 
+                {
+                    lyrics.Append(child.InnerText);
+                }
             }
         }
 
         var cleanLyrics = HtmlEntity.DeEntitize(lyrics.ToString().Trim()).ToString();
 
-        return new SearchResult(SearchResultType.Successfully, cleanLyrics);
+        int index = cleanLyrics.IndexOf('[');
+
+        if (index != -1)
+            cleanLyrics = cleanLyrics[(index)..];
+
+        return new SearchResult(SearchResultType.Successfully, cleanLyrics, "successfully");
     }
 }
