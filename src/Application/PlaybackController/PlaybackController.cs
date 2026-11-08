@@ -18,7 +18,7 @@ public class PlaybackController
     private int _index;
 
     public PlaybackState PlaybackState { get; private set; }
-    public event Action<PlaybackState> PlaybackStateChanged;
+    public event Action<PlaybackState>? PlaybackStateChanged;
     private AudioService _audioService;
 
     private bool isLooped;

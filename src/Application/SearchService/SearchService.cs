@@ -37,7 +37,7 @@ public class SearchService
 
     public async Task<SearchResult> SearchLyrics(string lyricsUrl)
     {
-        var document = await _httpService.LoadHtmlAsync(lyricsUrl, NetworkErrorType.LyricsError);
+        var document = await _httpService.GetLyricsResponseAsync(lyricsUrl);
 
         if (document is null)
             return new SearchResult(SearchResultType.Failed, "lyrics page not found");

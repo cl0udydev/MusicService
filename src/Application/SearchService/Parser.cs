@@ -4,6 +4,7 @@ using HtmlAgilityPack;
 using MusicService.Sources;
 using MusicService.Domain;
 using System.Text;
+using System.Text.Json;
 
 namespace MusicService.Applic.SearchService;
 
@@ -47,7 +48,10 @@ public class Parser
             else if (TimeSpan.TryParseExact(durationStr, @"h\:mm\:ss", null, out duration)) { }
             else if (TimeSpan.TryParse(durationStr, out duration)) { }
 
-            string lyricsLink = $"https://genius.com/{author.Replace(" ", "-")}-{name.Replace(" ", "-")}-lyrics";
+            string escapedArtist = author.Replace(" ", "+");
+            string escapedTitle = name.Replace(" ", "+");
+
+            string lyricsLink = $"https://lrclib.net/api/get?artist_name={escapedArtist}&track_name={escapedTitle}";
 
             Track track = new Track(trackUrl, name, author, duration, trackImageLink, lyricsLink);
 
@@ -62,44 +66,26 @@ public class Parser
         return new SearchResult(SearchResultType.Successfully, tracks, "successfully");
     }
 
-    public SearchResult ParseLyrics(HtmlDocument document)
+    public SearchResult ParseLyrics(JsonDocument document)
     {
-        HtmlNode? errorNode = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'render_404')]");
-
-        if (errorNode != null) return new SearchResult(SearchResultType.Failed, "no lirycs was found at this link");
-
-        HtmlNodeCollection? lyricsNode = document.DocumentNode.SelectNodes("//div[contains(@class, 'Lyrics__Container-sc-12f9e8d3-1 jhVhlB')]");
-
-        if (lyricsNode == null) return new SearchResult(SearchResultType.Failed, "no lyrics nodes were found");
-
-        StringBuilder lyrics = new StringBuilder();
+        string lyrics = "";
         
-        foreach (var node in lyricsNode)
+        if (document.RootElement.TryGetProperty("plainLyrics", out var plainLyricsElement))
         {
-            foreach (var child in node.ChildNodes)
-            {
-                if (child.NodeType == HtmlNodeType.Text)
-                {
-                    lyrics.Append(child.InnerText);
-                }
-                else if (child.Name == "br")
-                {
-                    lyrics.AppendLine();
-                }
-                else 
-                {
-                    lyrics.Append(child.InnerText);
-                }
-            }
+            lyrics = plainLyricsElement.GetString() ?? "";
         }
 
-        var cleanLyrics = HtmlEntity.DeEntitize(lyrics.ToString().Trim()).ToString();
+        if (string.IsNullOrWhiteSpace(lyrics) && document.RootElement.TryGetProperty("syncedLyrics", out var syncedElement))
+        {
+            lyrics = syncedElement.GetString() ?? "";
+        }
 
-        int index = cleanLyrics.IndexOf('[');
+        if (string.IsNullOrWhiteSpace(lyrics))
+        {
+            return new SearchResult(SearchResultType.Failed, "track lyrics not found");
+        }
 
-        if (index != -1)
-            cleanLyrics = cleanLyrics[(index)..];
-
-        return new SearchResult(SearchResultType.Successfully, cleanLyrics, "successfully");
+        return new SearchResult(SearchResultType.Successfully, lyrics.Trim(), "successfully");
     }
+
 }
