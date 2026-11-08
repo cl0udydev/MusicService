@@ -1,0 +1,43 @@
+@startuml
+title Music source adapters
+top to bottom direction
+skinparam monochrome true
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam nodesep 35
+skinparam ranksep 45
+hide empty members
+
+interface IMusicSource <<interface>> {
+  + GeneralNodeArgs: string
+  + FormingLink(query): string
+  + GetNameNode(node): HtmlNode?
+  + GetAuthorNode(node): HtmlNode?
+  + GetDurationNode(node): HtmlNode?
+  + GetLink(node): string?
+  + GetImageLink(node): string?
+}
+class HitmoMusicSource {
+  + GeneralNodeArgs: string
+  + FormingLink(query): string
+  + GetNameNode(node): HtmlNode?
+  + GetAuthorNode(node): HtmlNode?
+  + GetDurationNode(node): HtmlNode?
+  + GetLink(node): string?
+  + GetImageLink(node): string?
+}
+class LightAudioMusicSource {
+  + GeneralNodeArgs: string
+  + FormingLink(query): string
+  + GetNameNode(node): HtmlNode?
+  + GetAuthorNode(node): HtmlNode?
+  + GetDurationNode(node): HtmlNode?
+  + GetLink(node): string?
+  + GetImageLink(node): string?
+}
+
+HitmoMusicSource ..|> IMusicSource
+LightAudioMusicSource ..|> IMusicSource
+@enduml

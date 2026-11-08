@@ -1,0 +1,65 @@
+@startuml
+title Application startup and MVVM structure
+top to bottom direction
+skinparam monochrome true
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam nodesep 35
+skinparam ranksep 45
+hide empty members
+
+class App {
+  + Initialize(): void
+  + OnFrameworkInitializationCompleted(): void
+}
+class Application <<external>> {
+}
+class MainWindow {
+  - _allowClose: bool
+  + MainWindow()
+  - OnMinimizeClick(): void
+  - OnCloseClick(): void
+  - AnimateFadeOutAsync(): Task
+}
+class Window <<external>> {
+}
+class MainViewModel {
+  - playlistManager: PlaylistManager
+  - playbackController: PlaybackController
+  - audioService: AudioService
+  - searchService: SearchService
+  + MainViewModel()
+  + InitializeAsync(): Task
+}
+class ViewModelBase <<abstract>> {
+}
+class ObservableObject {
+}
+class TrackItemViewModel {
+  + Track: Track
+  + Name: string
+  + Author: string
+  + Duration: string
+  - _coverImage: Bitmap?
+  + CoverImage: Bitmap?
+  + TrackItemViewModel(track, cover)
+}
+class Track <<record>> {
+  + Link: string
+  + Name: string
+  + Author: string
+  + Duration: TimeSpan
+}
+
+App -|> Application
+MainWindow -|> Window
+MainViewModel -|> ViewModelBase
+ViewModelBase -|> ObservableObject
+TrackItemViewModel -|> ObservableObject
+App ..> MainWindow
+App ..> MainViewModel
+MainWindow ..> MainViewModel
+TrackItemViewModel --> Track
+@enduml

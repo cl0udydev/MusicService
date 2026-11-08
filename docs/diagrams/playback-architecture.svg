@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1080" viewBox="0 0 1100 1080">
+<title>Playback controller and audio output</title>
+<defs>
+<marker id="solidArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+<marker id="openArrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5.5 L0,11" fill="white" stroke="#111" stroke-width="1.2"/></marker>
+<marker id="triangle" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L13,7 L0,14 z" fill="white" stroke="#111" stroke-width="1.2"/></marker>
+<marker id="diamond" markerWidth="13" markerHeight="13" refX="1" refY="6.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M1,6.5 L6.5,1 L12,6.5 L6.5,12 z" fill="#111" stroke="#111" stroke-width="1"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="550.0" y="32" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#111">Playback controller and audio output</text>
+<polyline points="490.0,221.6 525.0,221.6 560.0,221.6 560.0,177.9" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="135.1,526.0 135.1,540.0 245.0,540.0 245.0,560.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="408.1,526.0 408.1,545.0 765.0,545.0 765.0,560.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<polyline points="455.0,667.5 540.0,667.5 540.0,663.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="1015.0,260.6 1030.0,260.6 1030.0,785.0 690.0,785.0 635.0,785.0 635.0,820.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<polyline points="1015.0,365.9 1030.0,365.9 1030.0,805.0 925.0,805.0 920.0,805.0 920.0,820.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<rect x="35" y="35" width="455" height="491" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="262.5" y="61" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">PlaybackController</text>
+<line x1="35" y1="75" x2="490" y2="75" stroke="#111" stroke-width="1.3"/>
+<text x="47" y="98" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- currentTrack: Track?</text>
+<text x="47" y="121" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- playlist: Playlist?</text>
+<text x="47" y="144" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _index: int</text>
+<text x="47" y="167" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _audioService: AudioService</text>
+<text x="47" y="190" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- isLooped: bool</text>
+<text x="47" y="213" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- isShuffle: bool</text>
+<text x="47" y="236" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ CurrentTrack: Track?</text>
+<text x="47" y="259" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PlaybackState: PlaybackState</text>
+<text x="47" y="282" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ CurrentTrackChanged: Action</text>
+<text x="47" y="305" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PlaybackStateChanged: Action&lt;PlaybackState&gt;</text>
+<line x1="35" y1="321" x2="490" y2="321" stroke="#111" stroke-width="1.0"/>
+<text x="47" y="337" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ ChangeLooped(): void</text>
+<text x="47" y="360" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ ChangeShuffle(): void</text>
+<text x="47" y="383" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ ChangePlaylist(playlist, index): void</text>
+<text x="47" y="406" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PlayTrackAsync(): Task</text>
+<text x="47" y="429" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PlayNextTrackAsync(): Task</text>
+<text x="47" y="452" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PlayPreviousTrackAsync(): Task</text>
+<text x="47" y="475" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ StopTrack(): void</text>
+<text x="47" y="498" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PauseTrack(): void</text>
+<rect x="560" y="35" width="455" height="376" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="787.5" y="61" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">AudioService</text>
+<line x1="560" y1="75" x2="1015" y2="75" stroke="#111" stroke-width="1.3"/>
+<text x="572" y="98" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _mediaReader: MediaFoundationReader?</text>
+<text x="572" y="121" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _outputDevice: WasapiPlayer?</text>
+<text x="572" y="144" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _currentTrackUrl: string?</text>
+<text x="572" y="167" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _requestedStopReason: PlaybackStopReason?</text>
+<text x="572" y="190" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ CurrentSeconds: double</text>
+<text x="572" y="213" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ TotalSeconds: double</text>
+<text x="572" y="236" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ TrackFinished: Action</text>
+<text x="572" y="259" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PlaybackStateChanged: Action&lt;PlaybackState&gt;</text>
+<line x1="560" y1="275" x2="1015" y2="275" stroke="#111" stroke-width="1.0"/>
+<text x="572" y="291" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ PlayAsync(url): Task</text>
+<text x="572" y="314" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Stop(reason): void</text>
+<text x="572" y="337" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Pause(): void</text>
+<text x="572" y="360" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ SetVolume(volume): void</text>
+<text x="572" y="383" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Seek(seconds): void</text>
+<rect x="35" y="560" width="420" height="215" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="245.0" y="586" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">Playlist</text>
+<line x1="35" y1="600" x2="455" y2="600" stroke="#111" stroke-width="1.3"/>
+<text x="47" y="623" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Id: int</text>
+<text x="47" y="646" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Name: string</text>
+<text x="47" y="669" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Tracks: List&lt;Track&gt;</text>
+<line x1="35" y1="685" x2="455" y2="685" stroke="#111" stroke-width="1.0"/>
+<text x="47" y="701" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ AddTrack(track): void</text>
+<text x="47" y="724" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ RemoveTrack(track): void</text>
+<text x="47" y="747" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ ChangeName(name): void</text>
+<rect x="540" y="560" width="450" height="206" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="765.0" y="585" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">Track</text>
+<text x="765.0" y="602" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«record»</text>
+<line x1="540" y1="615" x2="990" y2="615" stroke="#111" stroke-width="1.3"/>
+<text x="552" y="638" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Link: string</text>
+<text x="552" y="661" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Name: string</text>
+<text x="552" y="684" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Author: string</text>
+<text x="552" y="707" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Duration: TimeSpan</text>
+<text x="552" y="730" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ ImageLink: string</text>
+<text x="552" y="753" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ LyricsLink: string</text>
+<rect x="510" y="820" width="250" height="221" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="635.0" y="845" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">PlaybackStopReason</text>
+<text x="635.0" y="862" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«enumeration»</text>
+<line x1="510" y1="875" x2="760" y2="875" stroke="#111" stroke-width="1.3"/>
+<text x="522" y="898" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">None</text>
+<text x="522" y="921" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">UserStopped</text>
+<text x="522" y="944" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">TrackSwitch</text>
+<rect x="790" y="820" width="260" height="114" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="920.0" y="845" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">NetworkErrorsSystem</text>
+<text x="920.0" y="862" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«static class»</text>
+<line x1="790" y1="875" x2="1050" y2="875" stroke="#111" stroke-width="1.3"/>
+<text x="802" y="898" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ EmitNetworkError(exception,</text>
+<text x="802" y="921" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">type): void</text>
+<polyline points="490.0,221.6 525.0,221.6 560.0,221.6 560.0,177.9" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polyline points="135.1,526.0 135.1,540.0 245.0,540.0 245.0,560.0" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polyline points="408.1,526.0 408.1,545.0 765.0,545.0 765.0,560.0" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polyline points="1015.0,260.6 1030.0,260.6 1030.0,785.0 690.0,785.0 635.0,785.0 635.0,820.0" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polyline points="1015.0,365.9 1030.0,365.9 1030.0,805.0 925.0,805.0 920.0,805.0 920.0,820.0" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polygon points="455.0,667.5 462.0,660.5 469.0,667.5 462.0,674.5" fill="#111" stroke="#111"/>
+</svg>

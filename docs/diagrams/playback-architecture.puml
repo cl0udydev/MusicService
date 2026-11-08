@@ -1,0 +1,79 @@
+@startuml
+title Playback controller and audio output
+top to bottom direction
+skinparam monochrome true
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam nodesep 35
+skinparam ranksep 45
+hide empty members
+
+class PlaybackController {
+  - currentTrack: Track?
+  - playlist: Playlist?
+  - _index: int
+  - _audioService: AudioService
+  - isLooped: bool
+  - isShuffle: bool
+  + CurrentTrack: Track?
+  + PlaybackState: PlaybackState
+  + CurrentTrackChanged: Action
+  + PlaybackStateChanged: Action<PlaybackState>
+  + ChangeLooped(): void
+  + ChangeShuffle(): void
+  + ChangePlaylist(playlist, index): void
+  + PlayTrackAsync(): Task
+  + PlayNextTrackAsync(): Task
+  + PlayPreviousTrackAsync(): Task
+  + StopTrack(): void
+  + PauseTrack(): void
+}
+class AudioService {
+  - _mediaReader: MediaFoundationReader?
+  - _outputDevice: WasapiPlayer?
+  - _currentTrackUrl: string?
+  - _requestedStopReason: PlaybackStopReason?
+  + CurrentSeconds: double
+  + TotalSeconds: double
+  + TrackFinished: Action
+  + PlaybackStateChanged: Action<PlaybackState>
+  + PlayAsync(url): Task
+  + Stop(reason): void
+  + Pause(): void
+  + SetVolume(volume): void
+  + Seek(seconds): void
+}
+class Playlist {
+  + Id: int
+  + Name: string
+  + Tracks: List<Track>
+  + AddTrack(track): void
+  + RemoveTrack(track): void
+  + ChangeName(name): void
+}
+class Track <<record>> {
+  + Link: string
+  + Name: string
+  + Author: string
+  + Duration: TimeSpan
+  + ImageLink: string
+  + LyricsLink: string
+}
+enum PlaybackStopReason <<enumeration>> {
+  None
+  UserStopped
+  TrackSwitch
+}
+class NetworkErrorsSystem <<static>> {
+  + EmitNetworkError(exception, type): void
+}
+
+PlaybackController --> AudioService
+PlaybackController --> Playlist
+PlaybackController ..> Track
+AudioService ..> PlaybackStopReason
+AudioService ..> NetworkErrorsSystem
+Playlist *-- Track
+@enduml

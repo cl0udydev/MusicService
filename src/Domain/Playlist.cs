@@ -17,7 +17,7 @@ public class Playlist
     [JsonIgnore]
     public List<Track> Tracks => _tracks; // kludge that weakens encapsulation
 
-
+    [JsonConstructor]
     public Playlist(int id)
     {
         Id = id;

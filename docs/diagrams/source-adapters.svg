@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="590" viewBox="0 0 940 590">
+<title>Music source adapters</title>
+<defs>
+<marker id="solidArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+<marker id="openArrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5.5 L0,11" fill="white" stroke="#111" stroke-width="1.2"/></marker>
+<marker id="triangle" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L13,7 L0,14 z" fill="white" stroke="#111" stroke-width="1.2"/></marker>
+<marker id="diamond" markerWidth="13" markerHeight="13" refX="1" refY="6.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M1,6.5 L6.5,1 L12,6.5 L6.5,12 z" fill="#111" stroke="#111" stroke-width="1"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="470.0" y="32" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#111">Music source adapters</text>
+<polyline points="156.0,285.0 156.0,245.0 402.0,245.0 374.8,245.0 374.8,282.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<polyline points="784.0,285.0 784.0,245.0 638.0,245.0 565.2,245.0 565.2,282.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<rect x="300" y="35" width="340" height="247" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="470.0" y="60" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">IMusicSource</text>
+<text x="470.0" y="77" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«interface»</text>
+<line x1="300" y1="90" x2="640" y2="90" stroke="#111" stroke-width="1.3"/>
+<text x="312" y="113" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GeneralNodeArgs: string</text>
+<line x1="300" y1="129" x2="640" y2="129" stroke="#111" stroke-width="1.0"/>
+<text x="312" y="145" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ FormingLink(query): string</text>
+<text x="312" y="168" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetNameNode(node): HtmlNode?</text>
+<text x="312" y="191" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetAuthorNode(node): HtmlNode?</text>
+<text x="312" y="214" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetDurationNode(node): HtmlNode?</text>
+<text x="312" y="237" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetLink(node): string?</text>
+<text x="312" y="260" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetImageLink(node): string?</text>
+<rect x="45" y="285" width="370" height="238" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="230.0" y="311" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">HitmoMusicSource</text>
+<line x1="45" y1="325" x2="415" y2="325" stroke="#111" stroke-width="1.3"/>
+<text x="57" y="348" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GeneralNodeArgs: string</text>
+<line x1="45" y1="364" x2="415" y2="364" stroke="#111" stroke-width="1.0"/>
+<text x="57" y="380" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ FormingLink(query): string</text>
+<text x="57" y="403" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetNameNode(node): HtmlNode?</text>
+<text x="57" y="426" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetAuthorNode(node): HtmlNode?</text>
+<text x="57" y="449" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetDurationNode(node): HtmlNode?</text>
+<text x="57" y="472" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetLink(node): string?</text>
+<text x="57" y="495" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetImageLink(node): string?</text>
+<rect x="525" y="285" width="370" height="238" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="710.0" y="311" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">LightAudioMusicSource</text>
+<line x1="525" y1="325" x2="895" y2="325" stroke="#111" stroke-width="1.3"/>
+<text x="537" y="348" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GeneralNodeArgs: string</text>
+<line x1="525" y1="364" x2="895" y2="364" stroke="#111" stroke-width="1.0"/>
+<text x="537" y="380" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ FormingLink(query): string</text>
+<text x="537" y="403" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetNameNode(node): HtmlNode?</text>
+<text x="537" y="426" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetAuthorNode(node): HtmlNode?</text>
+<text x="537" y="449" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetDurationNode(node): HtmlNode?</text>
+<text x="537" y="472" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetLink(node): string?</text>
+<text x="537" y="495" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ GetImageLink(node): string?</text>
+<polyline points="156.0,285.0 156.0,245.0 402.0,245.0 374.8,245.0 374.8,282.0" fill="none" stroke="none" marker-end="url(#triangle)"/>
+<polyline points="784.0,285.0 784.0,245.0 638.0,245.0 565.2,245.0 565.2,282.0" fill="none" stroke="none" marker-end="url(#triangle)"/>
+</svg>

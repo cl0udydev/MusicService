@@ -1,0 +1,50 @@
+@startuml
+title Local JSON storage
+top to bottom direction
+skinparam monochrome true
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam nodesep 35
+skinparam ranksep 45
+hide empty members
+
+interface IDataModel<TData> <<interface>> {
+  + FilePath: string
+  + Init(): void
+  + Save(data: TData): Task
+  + Load(): Task<TData>
+}
+interface IPlaylistsDataModel <<interface>> {
+}
+interface IIndicesDataModel <<interface>> {
+}
+class PlaylistsDataModel {
+  - filePath: string
+  + FilePath: string
+  + PlaylistsDataModel(directoryPath: string)
+  + Init(): void
+  + Load(): Task<Dictionary<int, Playlist>>
+  + Save(playlists): Task
+}
+class IndicesDataModel {
+  - filePath: string
+  + FilePath: string
+  + IndicesDataModel(directoryPath)
+  + Init(): void
+  + Load(): Task<int>
+  + Save(index: int): Task
+}
+class Playlist {
+  + Id: int
+  + Name: string
+  + Tracks: List<Track>
+}
+
+IPlaylistsDataModel -|> IDataModel<TData>
+IIndicesDataModel -|> IDataModel<TData>
+PlaylistsDataModel ..|> IPlaylistsDataModel
+IndicesDataModel ..|> IIndicesDataModel
+PlaylistsDataModel ..> Playlist
+@enduml

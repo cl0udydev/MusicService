@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="1320" viewBox="0 0 1220 1320">
+<title>Application startup and MVVM structure</title>
+<defs>
+<marker id="solidArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+<marker id="openArrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,5.5 L0,11" fill="white" stroke="#111" stroke-width="1.2"/></marker>
+<marker id="triangle" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L13,7 L0,14 z" fill="white" stroke="#111" stroke-width="1.2"/></marker>
+<marker id="diamond" markerWidth="13" markerHeight="13" refX="1" refY="6.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M1,6.5 L6.5,1 L12,6.5 L6.5,12 z" fill="#111" stroke="#111" stroke-width="1"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="610.0" y="32" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#111">Application startup and MVVM structure</text>
+<polyline points="560.0,175.0 555.0,175.0 555.0,275.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="217.5,420.0 205.0,420.0 205.0,356.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="616.6,635.0 616.6,665.0 655.0,665.0 655.0,700.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="655.0,766.0 655.0,835.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="955.0,965.5 805.0,965.5 805.0,868.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<polyline points="350.0,99.4 18.0,99.4 18.0,395.0 217.5,395.0 217.5,420.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<polyline points="694.4,175.0 830.0,175.0 830.0,395.0 820.0,395.0 720.0,395.0 720.0,420.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<polyline points="400.0,516.0 440.0,516.0 485.0,516.0 485.0,527.5" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square" stroke-dasharray="7,5"/>
+<polyline points="1070.0,1096.0 1070.0,1125.0" stroke="#111" stroke-width="1.55" fill="none" stroke-linejoin="miter" stroke-linecap="square"/>
+<rect x="350" y="70" width="420" height="105" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="560.0" y="96" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">App</text>
+<line x1="350" y1="110" x2="770" y2="110" stroke="#111" stroke-width="1.3"/>
+<text x="362" y="133" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Initialize(): void</text>
+<text x="362" y="156" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ OnFrameworkInitializationCompleted(): void</text>
+<rect x="435" y="275" width="240" height="66" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="555.0" y="300" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">Application</text>
+<text x="555.0" y="317" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«Avalonia»</text>
+<line x1="435" y1="330" x2="675" y2="330" stroke="#111" stroke-width="1.3"/>
+<rect x="35" y="420" width="365" height="192" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="217.5" y="446" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">MainWindow</text>
+<line x1="35" y1="460" x2="400" y2="460" stroke="#111" stroke-width="1.3"/>
+<text x="47" y="483" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _allowClose: bool</text>
+<line x1="35" y1="499" x2="400" y2="499" stroke="#111" stroke-width="1.0"/>
+<text x="47" y="515" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ MainWindow()</text>
+<text x="47" y="538" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- OnMinimizeClick(): void</text>
+<text x="47" y="561" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- OnCloseClick(): void</text>
+<text x="47" y="584" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- AnimateFadeOutAsync(): Task</text>
+<rect x="85" y="290" width="240" height="66" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="205.0" y="315" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">Window</text>
+<text x="205.0" y="332" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«Avalonia»</text>
+<line x1="85" y1="345" x2="325" y2="345" stroke="#111" stroke-width="1.3"/>
+<rect x="485" y="420" width="470" height="215" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="720.0" y="446" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">MainViewModel</text>
+<line x1="485" y1="460" x2="955" y2="460" stroke="#111" stroke-width="1.3"/>
+<text x="497" y="483" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- playlistManager: PlaylistManager</text>
+<text x="497" y="506" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- playbackController: PlaybackController</text>
+<text x="497" y="529" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- audioService: AudioService</text>
+<text x="497" y="552" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- searchService: SearchService</text>
+<line x1="485" y1="568" x2="955" y2="568" stroke="#111" stroke-width="1.0"/>
+<text x="497" y="584" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ MainViewModel()</text>
+<text x="497" y="607" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ InitializeAsync(): Task</text>
+<rect x="505" y="700" width="300" height="66" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="655.0" y="725" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">ViewModelBase</text>
+<text x="655.0" y="742" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«abstract class»</text>
+<line x1="505" y1="755" x2="805" y2="755" stroke="#111" stroke-width="1.3"/>
+<rect x="505" y="835" width="300" height="66" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="655.0" y="860" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">ObservableObject</text>
+<text x="655.0" y="877" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«CommunityToolkit.Mvvm»</text>
+<line x1="505" y1="890" x2="805" y2="890" stroke="#111" stroke-width="1.3"/>
+<rect x="955" y="835" width="230" height="261" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="1070.0" y="861" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">TrackItemViewModel</text>
+<line x1="955" y1="875" x2="1185" y2="875" stroke="#111" stroke-width="1.3"/>
+<text x="967" y="898" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Track: Track</text>
+<text x="967" y="921" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Name: string</text>
+<text x="967" y="944" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Author: string</text>
+<text x="967" y="967" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Duration: string</text>
+<text x="967" y="990" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">- _coverImage: Bitmap?</text>
+<text x="967" y="1013" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ CoverImage: Bitmap?</text>
+<line x1="955" y1="1029" x2="1185" y2="1029" stroke="#111" stroke-width="1.0"/>
+<text x="967" y="1045" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ TrackItemViewModel(track,</text>
+<text x="967" y="1068" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">cover)</text>
+<rect x="955" y="1125" width="230" height="160" fill="white" stroke="#111" stroke-width="1.7"/>
+<text x="1070.0" y="1150" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18.5" fill="#111">Track</text>
+<text x="1070.0" y="1167" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#111">«record»</text>
+<line x1="955" y1="1180" x2="1185" y2="1180" stroke="#111" stroke-width="1.3"/>
+<text x="967" y="1203" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Link: string</text>
+<text x="967" y="1226" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Name: string</text>
+<text x="967" y="1249" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Author: string</text>
+<text x="967" y="1272" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111">+ Duration: TimeSpan</text>
+<polyline points="560.0,175.0 555.0,175.0 555.0,275.0" fill="none" stroke="none" marker-end="url(#triangle)"/>
+<polyline points="217.5,420.0 205.0,420.0 205.0,356.0" fill="none" stroke="none" marker-end="url(#triangle)"/>
+<polyline points="616.6,635.0 616.6,665.0 655.0,665.0 655.0,700.0" fill="none" stroke="none" marker-end="url(#triangle)"/>
+<polyline points="655.0,766.0 655.0,835.0" fill="none" stroke="none" marker-end="url(#triangle)"/>
+<polyline points="955.0,965.5 805.0,965.5 805.0,868.0" fill="none" stroke="none" marker-end="url(#triangle)"/>
+<polyline points="350.0,99.4 18.0,99.4 18.0,395.0 217.5,395.0 217.5,420.0" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polyline points="694.4,175.0 830.0,175.0 830.0,395.0 820.0,395.0 720.0,395.0 720.0,420.0" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polyline points="400.0,516.0 440.0,516.0 485.0,516.0 485.0,527.5" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+<polyline points="1070.0,1096.0 1070.0,1125.0" fill="none" stroke="none" marker-end="url(#openArrow)"/>
+</svg>
