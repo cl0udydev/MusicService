@@ -1,4 +1,4 @@
-namespace MusicService.Applic.PlaybackController;
+namespace MusicService.Core.Applic.PlaybackController;
 
 public enum PlaybackStopReason
 {

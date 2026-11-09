@@ -1,6 +1,6 @@
 using HtmlAgilityPack;
 
-namespace MusicService.Sources;
+namespace MusicService.Core.Sources;
 
 public class LightAudioMusicSource: IMusicSource
 {

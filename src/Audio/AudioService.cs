@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using NAudio.Wave;
 using System;
-using MusicService.Infrastructure;
-using MusicService.Applic.PlaybackController;
+using MusicService.Core.Infrastructure;
+using MusicService.Core.Applic.PlaybackController;
 
-namespace MusicService.Audio;
+namespace MusicService.Core.Audio;
 
 public class AudioService
 {

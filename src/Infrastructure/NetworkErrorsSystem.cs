@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MusicService.Infrastructure;
+namespace MusicService.Core.Infrastructure;
 
 internal static class NetworkErrorsSystem
 {

@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace MusicService.Infrastructure.Storage.DataModels;
+namespace MusicService.Core.Infrastructure.Storage.DataModels;
 
 public class IndicesDataModel: IIndicesDataModel
 {

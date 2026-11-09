@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace MusicService.Domain;
+namespace MusicService.Core.Domain;
 
 // dataclass for storing tracks information 
 public record class Track

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace MusicService.Domain;
+namespace MusicService.Core.Domain;
 
 // tracks playlist class 
 public class Playlist

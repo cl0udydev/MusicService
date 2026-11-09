@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using MusicService.Infrastructure.Storage.DataModels;
+using MusicService.Core.Infrastructure.Storage.DataModels;
 
-namespace MusicService.Infrastructure.Storage;
+namespace MusicService.Core.Infrastructure.Storage;
 
 internal static class AppDataService
 {

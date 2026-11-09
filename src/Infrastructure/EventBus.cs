@@ -1,3 +1,3 @@
-namespace MusicService.Infrastructure;
+namespace MusicService.Core.Infrastructure;
 
 internal static class EventBus {}

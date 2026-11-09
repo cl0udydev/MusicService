@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using MusicService.Infrastructure;
-using MusicService.Sources;
+using MusicService.Core.Infrastructure;
+using MusicService.Core.Sources;
 
-namespace MusicService.Applic.SearchService;
+namespace MusicService.Core.Applic.SearchService;
 
 public class SearchService
 {

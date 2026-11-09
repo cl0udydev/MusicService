@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MusicService.Audio;
-using MusicService.Domain;
+using MusicService.Core.Audio;
+using MusicService.Core.Domain;
 using NAudio.Wave;
 
-namespace MusicService.Applic.PlaybackController;
+namespace MusicService.Core.Applic.PlaybackController;
 
 public class PlaybackController
 {

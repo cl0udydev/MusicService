@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using MusicService.Domain;
+using MusicService.Core.Domain;
 
-namespace MusicService.Infrastructure.Storage.DataModels;
+namespace MusicService.Core.Infrastructure.Storage.DataModels;
 
 public interface IDataModel<TData>
 {

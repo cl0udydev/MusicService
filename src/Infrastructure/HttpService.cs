@@ -4,7 +4,7 @@ using HtmlAgilityPack;
 using System.Net.Http;
 using System.Text.Json;
 
-namespace MusicService.Infrastructure;
+namespace MusicService.Core.Infrastructure;
 
 internal sealed class HttpService
 {

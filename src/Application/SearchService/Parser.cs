@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using HtmlAgilityPack;
-using MusicService.Sources;
-using MusicService.Domain;
-using System.Text;
+using MusicService.Core.Sources;
+using MusicService.Core.Domain;
 using System.Text.Json;
 
-namespace MusicService.Applic.SearchService;
+namespace MusicService.Core.Applic.SearchService;
 
 // parser html document to SearchResult => SearchService => ViewModel
 public class Parser

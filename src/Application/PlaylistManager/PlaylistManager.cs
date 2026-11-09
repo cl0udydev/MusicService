@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MusicService.Domain;
 using MusicService.Infrastructure.Storage;
 
-namespace MusicService.Applic.PlaylistManager;
+namespace MusicService.Core.Applic.PlaylistManager;
 
 public class PlaylistManager
 {

@@ -2,9 +2,9 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using MusicService.Domain;
+using MusicService.Core.Domain;
 
-namespace MusicService.Infrastructure.Storage.DataModels;
+namespace MusicService.Core.Infrastructure.Storage.DataModels;
 
 public class PlaylistsDataModel: IPlaylistsDataModel
 {
