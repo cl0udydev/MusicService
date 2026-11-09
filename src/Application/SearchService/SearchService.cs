@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using MusicService.Infrastructure;
 using MusicService.Sources;
 
@@ -48,11 +47,11 @@ public class SearchService
 
     public async Task<SearchResult> SearchCover(string coverUrl)
     {
-        var cover = await _httpService.DownloadBitmapAsync(coverUrl);
+        var coverBytes = await _httpService.DownloadImageBytesAsync(coverUrl);
 
-        if (cover is null)
+        if (coverBytes is null)
             return new SearchResult(SearchResultType.Failed, "cover page not found");
 
-        return new SearchResult(SearchResultType.Successfully, cover, "successfully");
+        return new SearchResult(SearchResultType.Successfully, coverBytes, "successfully");
     }
 }

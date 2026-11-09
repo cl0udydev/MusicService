@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Avalonia.Media.Imaging;
 using MusicService.Domain;
 
 namespace MusicService.Applic.SearchService;
@@ -12,7 +11,7 @@ public readonly struct SearchResult
     public string Message { get; }
     public List<Track>? Tracks { get; }
     public string? Lyrics { get; }
-    public Bitmap? Cover { get; }
+    public byte[]? CoverBytes { get; }
 
     public SearchResult(SearchResultType type, List<Track> tracks, string message)
     {
@@ -36,14 +35,14 @@ public readonly struct SearchResult
         Message = message;
     }
 
-    public SearchResult(SearchResultType type, Bitmap cover, string message)
+    public SearchResult(SearchResultType type, byte[] cover, string message)
     {
         if (type != SearchResultType.Successfully)
         {
             throw new ArgumentException("Incoming SearchResultType must be Successfully", nameof(type));
         }
         Type = type;
-        Cover = cover;
+        CoverBytes = cover;
         Message = message;
     }
 

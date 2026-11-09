@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
-using System.IO;
 using System.Net.Http;
-using Avalonia.Media.Imaging;
 using System.Text.Json;
 
 namespace MusicService.Infrastructure;
@@ -65,15 +63,13 @@ internal sealed class HttpService
     }
 
 
-    public async Task<Bitmap?> DownloadBitmapAsync(string url, NetworkErrorType errorType = NetworkErrorType.SearchError)
+    public async Task<byte[]?> DownloadImageBytesAsync(string url, NetworkErrorType errorType = NetworkErrorType.SearchError)
     {
         try
         {
             var imageBytes = await _httpClient.GetByteArrayAsync(url);
 
-            using var memoryStream = new MemoryStream(imageBytes);
-
-            return new Bitmap(memoryStream);
+            return imageBytes;
         }
         catch (Exception ex)
         {
