@@ -1,5 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using MusicService.Domain;
+using MusicService.Core.Domain;
 using Avalonia.Media.Imaging;
 
 namespace MusicService.ViewModels;
