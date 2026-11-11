@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MusicService.Domain;
-using MusicService.Infrastructure.Storage;
+using MusicService.Core.Domain;
+using MusicService.Core.Infrastructure.Storage;
 
 namespace MusicService.Core.Applic.PlaylistManager;
 
