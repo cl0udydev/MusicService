@@ -1,15 +1,18 @@
-using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace MusicService.Core.Sources;
 
 public interface IMusicSource
 {
-    string GeneralNodeArgs { get; }
+    IReadOnlyDictionary<string, string> RequestHeaders { get; }
     string FormingLink(string userInput);
-    HtmlNode? GetNameNode(HtmlNode trackNode);
-    HtmlNode? GetAuthorNode(HtmlNode trackNode);
-    HtmlNode? GetDurationNode(HtmlNode trackNode);
-    string? GetLink(HtmlNode trackNode);
-    string? GetImageLink(HtmlNode trackNode);
+    JsonElement GetTracksList(JsonDocument json);
+    string? GetName(JsonElement trackNode);
+    string? GetAuthor(JsonElement trackNode);
+    TimeSpan GetDuration(JsonElement trackNode);
+    string? GetLink(JsonElement trackNode);
+    string? GetImageLink(JsonElement trackNode);
 
 }

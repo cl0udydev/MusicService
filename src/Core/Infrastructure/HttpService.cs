@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using System.Net.Http;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace MusicService.Core.Infrastructure;
 
@@ -38,17 +39,34 @@ internal sealed class HttpService
     }
 
 
-    public async Task<JsonDocument?> GetJsonResponseAsync(string url, NetworkErrorType errorType = NetworkErrorType.SearchError)
+    public async Task<JsonDocument?> GetJsonResponseAsync(
+        string url, IReadOnlyDictionary<string, string>? headers, NetworkErrorType errorType = NetworkErrorType.SearchError
+    )
     {
         try
-        {
-            using var response = await _httpClient.GetAsync(url);
+        {   
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+            if (headers != null)
+            {
+                foreach (KeyValuePair<string, string> header in headers)
+                {
+                    request.Headers.TryAddWithoutValidation(
+                        header.Key,
+                        header.Value
+                    );
+                }
+            }
+
+            using var response = await _httpClient.SendAsync(request);
+            
 
             if (response.StatusCode == System.Net.HttpStatusCode.NotFound) 
                 return null;
                     
-            if (!response.IsSuccessStatusCode) 
+            if (!response.IsSuccessStatusCode)
                 return null;
+
 
             string jsonResponse = await response.Content.ReadAsStringAsync();
             var doc = JsonDocument.Parse(jsonResponse);

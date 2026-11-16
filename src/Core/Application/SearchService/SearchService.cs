@@ -26,17 +26,17 @@ public class SearchService
     {
         var source = _musicSource;
         var link = source.FormingLink(userInput);
-        var document = await _httpService.LoadHtmlAsync(link, NetworkErrorType.SearchError);
+        using var jsonResponse = await _httpService.GetJsonResponseAsync(link, _musicSource.RequestHeaders, NetworkErrorType.SearchError);
 
-        if (document is null)
+        if (jsonResponse is null)
             return new SearchResult(SearchResultType.Failed, "track page not found");
 
-        return _parser.ParseSource(document, source);
+        return _parser.ParseSource(jsonResponse, source);
     }
 
     public async Task<SearchResult> SearchLyrics(string lyricsUrl)
     {
-        var document = await _httpService.GetLyricsResponseAsync(lyricsUrl);
+        var document = await _httpService.GetJsonResponseAsync(lyricsUrl, null);
 
         if (document is null)
             return new SearchResult(SearchResultType.Failed, "lyrics page not found");

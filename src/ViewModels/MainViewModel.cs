@@ -20,7 +20,7 @@ public partial class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        searchService = new SearchService(new HitmoMusicSource());
+        searchService = new SearchService(new AudiusMusicSource());
         audioService = new AudioService();
         playbackController = new PlaybackController(audioService);
     }

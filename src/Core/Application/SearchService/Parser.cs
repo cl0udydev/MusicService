@@ -10,60 +10,29 @@ namespace MusicService.Core.Applic.SearchService;
 // parser html document to SearchResult => SearchService => ViewModel
 public class Parser
 {
-    public SearchResult ParseSource(HtmlDocument document, IMusicSource musicSource)
+    public SearchResult ParseSource(JsonDocument document, IMusicSource musicSource)
     {
-        HtmlNodeCollection? trackNodes = document.DocumentNode.SelectNodes(musicSource.GeneralNodeArgs);
+        var tracksListJson = musicSource.GetTracksList(document).EnumerateArray();
+        var tracksList = new List<Track>();
 
-        if (trackNodes == null) return new SearchResult(SearchResultType.Failed, "main nodes of the track were not found");
-
-        List<Track> tracks = new();
-
-        foreach (HtmlNode trackNode in trackNodes)
+        foreach (var trackElement in tracksListJson)
         {
-            HtmlNode? trackName = musicSource.GetNameNode(trackNode);
+            var trackName = musicSource.GetName(trackElement);
+            var trackAuthor = musicSource.GetAuthor(trackElement);
+            var trackDuration = musicSource.GetDuration(trackElement);
+            var trackLink = musicSource.GetLink(trackElement);
+            var trackImageLink = musicSource.GetImageLink(trackElement);
 
-            HtmlNode? trackAuthor = musicSource.GetAuthorNode(trackNode);
+            Console.WriteLine(trackName, trackAuthor, trackDuration, trackLink, trackImageLink);
+            string escapedArtist = trackAuthor!.Replace(" ", "+");
+            string escapedTitle = trackName!.Replace(" ", "+");
 
-            HtmlNode? trackDuration = musicSource.GetDurationNode(trackNode);
+            var trackLyricsLink = $"https://lrclib.net/api/get?artist_name={escapedArtist}&track_name={escapedTitle}";
 
-            string? trackUrl = musicSource.GetLink(trackNode);
-
-            string? trackImageLink = musicSource.GetImageLink(trackNode);
-
-            if (trackName == null || trackAuthor == null || trackDuration == null || trackUrl == null)
-            {
-                continue;
-            }
-            if (trackImageLink == null) trackImageLink = "https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png";
-
-            string name = trackName.InnerText.Trim();
-            string author = trackAuthor.InnerText.Trim();
-
-            TimeSpan duration = TimeSpan.Zero;
-
-            string durationStr = trackDuration.InnerText.Trim(); 
-
-            if (TimeSpan.TryParseExact(durationStr, @"mm\:ss", null, out duration)) { }
-            else if (TimeSpan.TryParseExact(durationStr, @"m\:ss", null, out duration)) { }
-            else if (TimeSpan.TryParseExact(durationStr, @"h\:mm\:ss", null, out duration)) { }
-            else if (TimeSpan.TryParse(durationStr, out duration)) { }
-
-            string escapedArtist = author.Replace(" ", "+");
-            string escapedTitle = name.Replace(" ", "+");
-
-            string lyricsLink = $"https://lrclib.net/api/get?artist_name={escapedArtist}&track_name={escapedTitle}";
-
-            Track track = new Track(trackUrl, name, author, duration, trackImageLink, lyricsLink);
-
-            tracks.Add(track);
+            tracksList.Add(new Track(trackLink, trackName, trackAuthor, trackDuration, trackImageLink, trackLyricsLink));
         }
-
-        if (tracks.Count == 0)
-        {
-            return new SearchResult(SearchResultType.Failed, "no tracks found");
-        }
-
-        return new SearchResult(SearchResultType.Successfully, tracks, "successfully");
+        if (tracksList.Count == 0) return new SearchResult(SearchResultType.Failed, "tracks list equal to 0");
+        return new SearchResult(SearchResultType.Successfully, tracksList, "successfuly");     
     }
 
     public SearchResult ParseLyrics(JsonDocument document)
