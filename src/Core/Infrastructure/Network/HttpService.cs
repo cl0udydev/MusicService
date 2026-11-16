@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Collections.Generic;
 
-namespace MusicService.Core.Infrastructure;
+namespace MusicService.Core.Infrastructure.Network;
 
 internal sealed class HttpService
 {

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using MusicService.Core.Infrastructure;
+using MusicService.Core.Infrastructure.Network;
 using MusicService.Core.Sources;
 
 namespace MusicService.Core.Applic.SearchService;

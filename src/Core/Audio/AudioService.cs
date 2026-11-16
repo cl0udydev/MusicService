@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NAudio.Wave;
 using System;
-using MusicService.Core.Infrastructure;
+using MusicService.Core.Infrastructure.Network;
 using MusicService.Core.Applic.PlaybackController;
 
 namespace MusicService.Core.Audio;
