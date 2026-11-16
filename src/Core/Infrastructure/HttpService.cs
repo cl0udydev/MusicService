@@ -38,11 +38,11 @@ internal sealed class HttpService
     }
 
 
-    public async Task<JsonDocument?> GetLyricsResponseAsync(string url, NetworkErrorType errorType = NetworkErrorType.SearchError)
+    public async Task<JsonDocument?> GetJsonResponseAsync(string url, NetworkErrorType errorType = NetworkErrorType.SearchError)
     {
         try
         {
-            var response = await _httpClient.GetAsync(url);
+            using var response = await _httpClient.GetAsync(url);
 
             if (response.StatusCode == System.Net.HttpStatusCode.NotFound) 
                 return null;
