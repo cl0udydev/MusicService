@@ -29,11 +29,12 @@ public class Parser
             string? trackUrl = musicSource.GetLink(trackNode);
 
             string? trackImageLink = musicSource.GetImageLink(trackNode);
-            
-            if (trackName == null || trackAuthor == null || trackDuration == null || trackUrl == null || trackImageLink == null)
+
+            if (trackName == null || trackAuthor == null || trackDuration == null || trackUrl == null)
             {
-                continue; 
+                continue;
             }
+            if (trackImageLink == null) trackImageLink = "https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png";
 
             string name = trackName.InnerText.Trim();
             string author = trackAuthor.InnerText.Trim();
