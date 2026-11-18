@@ -25,6 +25,14 @@ public class SearchService
     public async Task<SearchResult> SearchTracks(string userInput)
     {
         var source = _musicSource;
+        
+        string? configurationError = source.ValidateConfiguration();
+
+        if (configurationError != null)
+        {
+            return new SearchResult(SearchResultType.Failed, configurationError);
+        }
+
         var link = source.FormingLink(userInput);
         using var jsonResponse = await _httpService.GetJsonResponseAsync(link, _musicSource.RequestHeaders, NetworkErrorType.SearchError);
 

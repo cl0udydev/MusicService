@@ -23,7 +23,6 @@ public class Parser
             var trackLink = musicSource.GetLink(trackElement);
             var trackImageLink = musicSource.GetImageLink(trackElement);
 
-            Console.WriteLine(trackName, trackAuthor, trackDuration, trackLink, trackImageLink);
             string escapedArtist = trackAuthor!.Replace(" ", "+");
             string escapedTitle = trackName!.Replace(" ", "+");
 

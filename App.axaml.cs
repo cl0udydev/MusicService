@@ -1,8 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using MusicService.Core.Infrastructure;
 using MusicService.ViewModels;
 using MusicService.Views;
+using System;
 
 namespace MusicService;
 

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using System.Net.Http;
 using System.Text.Json;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MusicService.Core.Infrastructure.Network;
@@ -40,7 +41,7 @@ internal sealed class HttpService
 
 
     public async Task<JsonDocument?> GetJsonResponseAsync(
-        string url, IReadOnlyDictionary<string, string>? headers, NetworkErrorType errorType = NetworkErrorType.SearchError
+        string url, IReadOnlyDictionary<string, string?>? headers, NetworkErrorType errorType = NetworkErrorType.SearchError
     )
     {
         try
@@ -49,8 +50,14 @@ internal sealed class HttpService
 
             if (headers != null)
             {
-                foreach (KeyValuePair<string, string> header in headers)
+                
+                foreach (KeyValuePair<string, string?> header in headers)
                 {
+                    if (header.Value == null)
+                    {
+                        continue;
+                    }
+                    
                     request.Headers.TryAddWithoutValidation(
                         header.Key,
                         header.Value
