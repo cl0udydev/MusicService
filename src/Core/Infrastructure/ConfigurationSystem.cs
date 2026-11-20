@@ -1,13 +1,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System;
 
 namespace MusicService.Core.Infrastructure;
 
 public static class ConfigurationSystem
 {
-    private static string APIKEYFilePath = @$"{Directory.GetCurrentDirectory()}\Settings\API_SETTINGS.json";
-    private static string APIKEYDirectory = @$"{Directory.GetCurrentDirectory()}\Settings";
+    private static string settingsDirectory = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    "MusicService",
+    "Settings"
+    );
+
+    private static string APIKEYFilePath = Path.Combine(settingsDirectory, "API_SETTINGS.json");
+
+
+
     private static Dictionary<API_CONFIGURATION_TYPE, string?>? API_Tokens;
 
     public static string? GetToken(API_CONFIGURATION_TYPE type)
@@ -19,7 +28,7 @@ public static class ConfigurationSystem
     {
         if (!File.Exists(APIKEYFilePath))
         {
-            Directory.CreateDirectory(APIKEYDirectory);
+            Directory.CreateDirectory(settingsDirectory);
             File.WriteAllText(APIKEYFilePath, "{}");
 
             using FileStream openStream = File.Create(APIKEYFilePath);
